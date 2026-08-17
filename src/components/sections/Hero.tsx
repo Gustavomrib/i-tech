@@ -32,11 +32,11 @@ export function Hero() {
     >
       <div aria-hidden="true" className="hero-page-grid absolute inset-0 -z-10" />
 
-      <Container>
-        <div className="grid items-center lg:grid-cols-12">
+      <Container className="hero-container">
+        <div className="hero-layout">
           <motion.div
             animate="visible"
-            className="relative z-10 lg:col-span-8 lg:row-start-1"
+            className="hero-copy relative z-10"
             initial="hidden"
             variants={contentVariants}
           >
@@ -50,8 +50,10 @@ export function Hero() {
               id="hero-title"
               variants={itemVariants}
             >
-              Seu PC pode{' '}
-              <span className="text-primary">entregar mais.</span>
+              <span className="lg:block">Seu PC pode</span>{' '}
+              <span className="lg:block">
+                entregar <span className="text-primary">mais.</span>
+              </span>
             </motion.h1>
 
             <motion.div
@@ -93,16 +95,18 @@ export function Hero() {
           <motion.figure
             animate="visible"
             aria-labelledby="hardware-placeholder-caption"
-            className="hero-media relative mt-14 overflow-hidden border border-border bg-surface lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mt-0 lg:translate-x-8"
+            className="hero-media relative mt-14 overflow-hidden border-l border-t border-border-highlight bg-surface lg:mt-0"
             initial="hidden"
             variants={itemVariants}
           >
             <div aria-hidden="true" className="hero-technical-grid absolute inset-0" />
             <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-primary" />
+            <div aria-hidden="true" className="absolute bottom-0 right-0 h-px w-2/3 bg-border-highlight" />
+            <div aria-hidden="true" className="absolute bottom-0 right-0 h-2/3 w-px bg-border-highlight" />
 
             <div
               aria-hidden="true"
-              className="absolute left-[16%] top-[13%] h-[68%] w-[62%] border border-border-highlight bg-background-secondary shadow-surface"
+              className="absolute left-[11%] top-[12%] h-[66%] w-[68%] border border-border-highlight bg-background-secondary shadow-surface"
             >
               <div className="absolute inset-[7%] border border-border" />
               <div className="absolute left-[17%] top-[12%] size-[42%] rounded-full border border-border-highlight">
@@ -122,7 +126,7 @@ export function Hero() {
             </div>
 
             <figcaption
-              className="absolute bottom-0 left-0 right-0 border-t border-border bg-background-secondary p-5 sm:p-6"
+              className="absolute bottom-6 left-6 right-8 sm:bottom-8 sm:left-8"
               id="hardware-placeholder-caption"
             >
               <span className="type-label text-primary">Área de fotografia</span>
