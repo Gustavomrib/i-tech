@@ -1,5 +1,6 @@
 import { Navbar } from '../components/layout/Navbar'
 import { Hero } from '../components/sections/Hero'
+import { ServiceProcess } from '../components/sections/ServiceProcess'
 import { Services } from '../components/sections/Services'
 
 export function HomePage() {
@@ -15,6 +16,7 @@ export function HomePage() {
       <main id="conteudo-principal">
         <Hero />
         <Services />
+        <ServiceProcess />
       </main>
     </>
   )
