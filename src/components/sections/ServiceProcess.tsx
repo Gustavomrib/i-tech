@@ -1,9 +1,8 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
 import { serviceProcess } from '../../data/serviceProcess'
 import {
-  createStaggerVariants,
   motionDuration,
   motionEase,
   revealItemVariants,
@@ -13,7 +12,18 @@ import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
 
-const timelineVariants = createStaggerVariants(0.075, 0.1)
+const approvalVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.98, y: 26 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.editorial,
+      ease: motionEase.reveal,
+    },
+  },
+}
 
 export function ServiceProcess() {
   const prefersReducedMotion = useReducedMotion()
@@ -51,6 +61,7 @@ export function ServiceProcess() {
             className="process-rail origin-top bg-primary"
             initial={prefersReducedMotion ? false : { scaleY: 0 }}
             transition={{
+              delay: 0.08,
               duration: motionDuration.editorial,
               ease: motionEase.reveal,
             }}
@@ -60,16 +71,15 @@ export function ServiceProcess() {
 
           <motion.ol
             className="process-track"
-            initial={prefersReducedMotion ? false : 'hidden'}
-            variants={timelineVariants}
-            viewport={{ once: true, amount: 0.08 }}
-            whileInView="visible"
           >
             {serviceProcess.map((step) => (
               <motion.li
                 className="process-step"
+                initial={prefersReducedMotion ? false : 'hidden'}
                 key={step.number}
-                variants={revealItemVariants}
+                variants={step.emphasis ? approvalVariants : revealItemVariants}
+                viewport={{ once: true, amount: 0.35 }}
+                whileInView="visible"
               >
                 <span
                   className={[

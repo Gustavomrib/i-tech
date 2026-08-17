@@ -72,8 +72,8 @@ export function Faq() {
                           className="inline-flex"
                           exit={{
                             opacity: 0,
-                            rotate: isOpen ? -20 : 20,
-                            scale: 0.85,
+                            rotate: isOpen ? -30 : 30,
+                            scale: 0.82,
                             transition: {
                               duration: prefersReducedMotion
                                 ? 0
@@ -84,7 +84,7 @@ export function Faq() {
                           initial={
                             prefersReducedMotion
                               ? false
-                              : { opacity: 0, rotate: isOpen ? 20 : -20, scale: 0.85 }
+                              : { opacity: 0, rotate: isOpen ? 30 : -30, scale: 0.82 }
                           }
                           key={isOpen ? 'minus' : 'plus'}
                           transition={{
@@ -102,12 +102,11 @@ export function Faq() {
                 <AnimatePresence initial={false}>
                   {isOpen ? (
                     <motion.div
-                      animate={{ height: 'auto', opacity: 1 }}
+                      animate={{ height: 'auto' }}
                       aria-labelledby={questionId}
                       className="overflow-hidden"
                       exit={{
                         height: 0,
-                        opacity: 0,
                         transition: {
                           duration: prefersReducedMotion
                             ? 0
@@ -116,14 +115,34 @@ export function Faq() {
                         },
                       }}
                       id={answerId}
-                      initial={{ height: 0, opacity: 0 }}
+                      initial={{ height: 0 }}
                       role="region"
                       transition={{
                         duration: prefersReducedMotion ? 0 : motionDuration.fast,
                         ease: motionEase.enter,
                       }}
                     >
-                      <div className="grid grid-cols-[2.5rem_1fr] gap-3 pb-6 sm:grid-cols-[4rem_1fr] sm:gap-5 sm:px-4 sm:pb-8">
+                      <motion.div
+                        animate={{ opacity: 1, y: 0 }}
+                        className="grid grid-cols-[2.5rem_1fr] gap-3 pb-6 sm:grid-cols-[4rem_1fr] sm:gap-5 sm:px-4 sm:pb-8"
+                        exit={{
+                          opacity: 0,
+                          y: prefersReducedMotion ? 0 : -4,
+                          transition: {
+                            duration: prefersReducedMotion
+                              ? 0
+                              : motionDuration.feedback,
+                            ease: motionEase.exit,
+                          },
+                        }}
+                        initial={
+                          prefersReducedMotion ? false : { opacity: 0, y: 8 }
+                        }
+                        transition={{
+                          duration: prefersReducedMotion ? 0 : motionDuration.fast,
+                          ease: motionEase.enter,
+                        }}
+                      >
                         <span aria-hidden="true" />
                         <p
                           className={[
@@ -135,7 +154,7 @@ export function Faq() {
                         >
                           {item.answer}
                         </p>
-                      </div>
+                      </motion.div>
                     </motion.div>
                   ) : null}
                 </AnimatePresence>

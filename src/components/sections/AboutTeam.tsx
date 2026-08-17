@@ -1,16 +1,30 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
+import { useEffect, useState } from 'react'
 
 import { team, type TeamMember, type TeamPhoto } from '../../data/team'
 import {
   createDirectionalReveal,
   createStaggerVariants,
+  motionDuration,
+  motionEase,
   sectionHeaderVariants,
 } from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 
-const teamVariants = createStaggerVariants(0.12)
-const profileVariants = createStaggerVariants(0.08)
+const profileVariants = createStaggerVariants(0.12)
+
+const copyPartVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.normal,
+      ease: motionEase.reveal,
+    },
+  },
+}
 
 function TeamPortrait({ photo }: { photo: TeamPhoto }) {
   return (
@@ -40,16 +54,34 @@ function TeamPortrait({ photo }: { photo: TeamPhoto }) {
   )
 }
 
-function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
+function TeamProfile({
+  member,
+  index,
+  motionDistance,
+  prefersReducedMotion,
+}: {
+  member: TeamMember
+  index: number
+  motionDistance: number
+  prefersReducedMotion: boolean | null
+}) {
   const isReversed = index % 2 === 1
-  const portraitVariants = createDirectionalReveal(isReversed ? 14 : -14)
-  const copyVariants = createDirectionalReveal(isReversed ? -14 : 14)
+  const portraitVariants = createDirectionalReveal(
+    isReversed ? motionDistance : -motionDistance,
+  )
+  const copyVariants = createDirectionalReveal(
+    isReversed ? -motionDistance : motionDistance,
+    0.075,
+  )
 
   return (
     <motion.article
       aria-labelledby={`${member.id}-name`}
       className="grid gap-8 border-t border-border pt-10 sm:gap-10 sm:pt-14 lg:grid-cols-12 lg:items-center lg:gap-8 lg:pt-16"
+      initial={prefersReducedMotion ? false : 'hidden'}
       variants={profileVariants}
+      viewport={{ once: true, amount: 0.18 }}
+      whileInView="visible"
     >
       <motion.div
         className={[
@@ -72,27 +104,35 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
         ].join(' ')}
         variants={copyVariants}
       >
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <motion.div
+          className="flex flex-wrap items-center gap-x-4 gap-y-2"
+          variants={copyPartVariants}
+        >
           <p className="type-label text-primary">{member.number} / Sócio</p>
           {member.age ? (
             <p className="type-label text-text-muted">{member.age} anos</p>
           ) : null}
-        </div>
-        <h3
+        </motion.div>
+        <motion.h3
           className="type-h2 mt-4 text-text-primary"
           id={`${member.id}-name`}
+          variants={copyPartVariants}
         >
           {member.name}
-        </h3>
+        </motion.h3>
 
-        <div className="mt-6 max-w-2xl space-y-4 leading-relaxed text-text-secondary">
+        <motion.div
+          className="mt-6 max-w-2xl space-y-4 leading-relaxed text-text-secondary"
+          variants={copyPartVariants}
+        >
           <p>{member.introduction}</p>
           <p>{member.contribution}</p>
-        </div>
+        </motion.div>
 
-        <ul
+        <motion.ul
           aria-label={`Formação técnica de ${member.firstName}`}
           className="mt-8 border-b border-border"
+          variants={copyPartVariants}
         >
           {member.education.map((education) => (
             <li
@@ -108,7 +148,7 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
               </span>
             </li>
           ))}
-        </ul>
+        </motion.ul>
       </motion.div>
     </motion.article>
   )
@@ -116,6 +156,21 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
 
 export function AboutTeam() {
   const prefersReducedMotion = useReducedMotion()
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window === 'undefined'
+      ? false
+      : window.matchMedia('(min-width: 64rem)').matches,
+  )
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 64rem)')
+    const handleChange = () => setIsDesktop(mediaQuery.matches)
+
+    handleChange()
+    mediaQuery.addEventListener('change', handleChange)
+
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
 
   return (
     <Section
@@ -161,17 +216,19 @@ export function AboutTeam() {
           </p>
         </div>
 
-        <motion.div
+        <div
           className="mt-14 grid gap-14 sm:mt-18 sm:gap-18 lg:mt-24 lg:gap-24"
-          initial={prefersReducedMotion ? false : 'hidden'}
-          variants={teamVariants}
-          viewport={{ once: true, amount: 0.08 }}
-          whileInView="visible"
         >
           {team.map((member, index) => (
-            <TeamProfile index={index} key={member.id} member={member} />
+            <TeamProfile
+              index={index}
+              key={member.id}
+              member={member}
+              motionDistance={isDesktop ? 30 : 22}
+              prefersReducedMotion={prefersReducedMotion}
+            />
           ))}
-        </motion.div>
+        </div>
       </Container>
     </Section>
   )

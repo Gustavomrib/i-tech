@@ -7,31 +7,52 @@ import { Button } from '../ui/Button'
 
 const contentVariants: Variants = {
   hidden: {},
+  visible: {},
+}
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay,
+      duration: motionDuration.reveal,
+      ease: motionEase.reveal,
+    },
+  }),
+}
+
+const headlineVariants: Variants = {
+  hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.06,
-      staggerChildren: 0.075,
+      delayChildren: 0.18,
+      staggerChildren: 0.08,
     },
   },
 }
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: motionDuration.reveal, ease: motionEase.reveal },
-  },
-}
-
-const accentVariants: Variants = {
-  hidden: { opacity: 0, y: 8 },
+const headlineLineVariants: Variants = {
+  hidden: { opacity: 0, y: '72%' },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.12,
-      duration: motionDuration.normal,
+      duration: motionDuration.editorial,
+      ease: motionEase.reveal,
+    },
+  },
+}
+
+const accentVariants: Variants = {
+  hidden: { opacity: 0, y: '72%' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.06,
+      duration: motionDuration.reveal,
       ease: motionEase.reveal,
     },
   },
@@ -41,7 +62,8 @@ const detailsVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.065,
+      delayChildren: 0.56,
+      staggerChildren: 0.09,
     },
   },
 }
@@ -65,7 +87,11 @@ export function Hero() {
             initial={prefersReducedMotion ? false : 'hidden'}
             variants={contentVariants}
           >
-            <motion.p className="type-label text-accent" variants={itemVariants}>
+            <motion.p
+              className="type-label text-accent"
+              custom={0.08}
+              variants={itemVariants}
+            >
               Hardware <span aria-hidden="true">•</span> Performance{' '}
               <span aria-hidden="true">•</span> Manutenção
             </motion.p>
@@ -73,11 +99,17 @@ export function Hero() {
             <motion.h1
               className="type-display mt-5 max-w-5xl text-text-primary sm:mt-6"
               id="hero-title"
-              variants={itemVariants}
+              variants={headlineVariants}
             >
-              <span className="lg:block">Seu PC pode</span>{' '}
-              <span className="lg:block">
-                entregar{' '}
+              <span className="inline-block overflow-hidden pb-1 lg:block">
+                <motion.span className="block" variants={headlineLineVariants}>
+                  Seu PC pode
+                </motion.span>
+              </span>{' '}
+              <span className="inline-block overflow-hidden pb-1 lg:block">
+                <motion.span className="inline-block" variants={headlineLineVariants}>
+                  entregar
+                </motion.span>{' '}
                 <motion.span
                   className="inline-block text-primary"
                   variants={accentVariants}
@@ -106,6 +138,7 @@ export function Hero() {
 
             <motion.div
               className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+              custom={0.82}
               variants={itemVariants}
             >
               <Button className="w-full sm:w-auto" href="#contato" size="lg">
@@ -123,6 +156,7 @@ export function Hero() {
 
             <motion.p
               className="mt-7 flex items-center gap-2 text-sm text-text-muted"
+              custom={0.94}
               variants={itemVariants}
             >
               <MapPin aria-hidden="true" size={16} />

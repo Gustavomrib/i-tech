@@ -22,7 +22,7 @@ export function ProjectMediaFrame({
       className={[
         'relative overflow-hidden border border-border bg-surface',
         interactive
-          ? 'transition-ui motion-safe:group-hover:-translate-y-0.5'
+          ? 'transition-ui motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:scale-[1.01]'
           : '',
         className,
       ]

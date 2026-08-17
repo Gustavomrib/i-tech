@@ -1,12 +1,13 @@
 import { motion, useReducedMotion } from 'motion/react'
 
 import { projects } from '../../data/projects'
-import { sectionHeaderVariants } from '../../lib/motion'
+import { createStaggerVariants, sectionHeaderVariants } from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { ProjectCard } from '../projects/ProjectCard'
 
 const homeProjects = projects.slice(0, 3)
+const projectGridVariants = createStaggerVariants(0.11, 0.04)
 
 export function ProjectsShowcase() {
   const prefersReducedMotion = useReducedMotion()
@@ -37,11 +38,17 @@ export function ProjectsShowcase() {
           </div>
         </motion.header>
 
-        <div className="mt-14 grid items-start gap-x-6 gap-y-12 sm:mt-18 md:grid-cols-2 lg:mt-24 lg:grid-cols-3 lg:gap-8">
+        <motion.div
+          className="mt-14 grid items-start gap-x-6 gap-y-12 sm:mt-18 md:grid-cols-2 lg:mt-24 lg:grid-cols-3 lg:gap-8"
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={projectGridVariants}
+          viewport={{ once: true, amount: 0.12 }}
+          whileInView="visible"
+        >
           {homeProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
-        </div>
+        </motion.div>
       </Container>
     </Section>
   )

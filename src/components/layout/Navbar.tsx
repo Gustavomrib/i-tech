@@ -21,12 +21,12 @@ const navigationLinkStyles =
 const mobileMenuVariants: Variants = {
   closed: {
     opacity: 0,
-    y: -8,
+    y: -14,
     transition: {
       duration: motionDuration.feedback,
       ease: motionEase.exit,
       when: 'afterChildren',
-      staggerChildren: 0.02,
+      staggerChildren: 0.025,
       staggerDirection: -1,
     },
   },
@@ -37,18 +37,33 @@ const mobileMenuVariants: Variants = {
       duration: motionDuration.fast,
       ease: motionEase.enter,
       when: 'beforeChildren',
-      staggerChildren: 0.035,
+      staggerChildren: 0.045,
     },
   },
 }
 
 const mobileMenuItemVariants: Variants = {
-  closed: { opacity: 0, y: -4 },
+  closed: { opacity: 0, y: -8 },
   open: {
     opacity: 1,
     y: 0,
     transition: { duration: motionDuration.feedback, ease: motionEase.enter },
   },
+}
+
+function createNavbarEntrance(delay: number): Variants {
+  return {
+    hidden: { opacity: 0, y: -12 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay,
+        duration: motionDuration.normal,
+        ease: motionEase.reveal,
+      },
+    },
+  }
 }
 
 export function Navbar() {
@@ -95,19 +110,32 @@ export function Navbar() {
     >
       <Container>
         <div className="flex h-18 items-center justify-between gap-6">
-          <Link
-            aria-label="i'tech — página inicial"
-            className={[
-              'rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl',
-              isScrolled ? 'motion-safe:md:scale-[0.97]' : '',
-            ].join(' ')}
-            onClick={closeMenu}
-            to="/"
+          <motion.div
+            animate="visible"
+            className="shrink-0"
+            initial={prefersReducedMotion ? false : 'hidden'}
+            variants={createNavbarEntrance(0.04)}
           >
-            i<span className="text-primary">&apos;</span>tech
-          </Link>
+            <Link
+              aria-label="i'tech — página inicial"
+              className={[
+                'inline-flex rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl',
+                isScrolled ? 'motion-safe:md:scale-[0.96]' : '',
+              ].join(' ')}
+              onClick={closeMenu}
+              to="/"
+            >
+              i<span className="text-primary">&apos;</span>tech
+            </Link>
+          </motion.div>
 
-          <nav aria-label="Navegação principal" className="hidden md:block">
+          <motion.nav
+            animate="visible"
+            aria-label="Navegação principal"
+            className="hidden md:block"
+            initial={prefersReducedMotion ? false : 'hidden'}
+            variants={createNavbarEntrance(0.11)}
+          >
             <ul className="flex items-center gap-1">
               {navigationItems.map((item) => (
                 <li key={item.label}>
@@ -121,29 +149,37 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-          </nav>
+          </motion.nav>
 
-          <div className="hidden md:block">
+          <motion.div
+            animate="visible"
+            className="hidden md:block"
+            initial={prefersReducedMotion ? false : 'hidden'}
+            variants={createNavbarEntrance(0.19)}
+          >
             <Button size="sm" to="/#contato" variant="secondary">
               Solicitar orçamento
             </Button>
-          </div>
+          </motion.div>
 
-          <button
+          <motion.button
+            animate="visible"
             aria-controls="mobile-navigation"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
             className="inline-flex size-11 items-center justify-center rounded-control border border-border bg-surface text-text-primary transition-ui hover:border-border-highlight hover:bg-surface-hover focus-visible:outline-focus md:hidden"
+            initial={prefersReducedMotion ? false : 'hidden'}
             onClick={() => setIsMenuOpen((currentState) => !currentState)}
             ref={menuButtonRef}
             type="button"
+            variants={createNavbarEntrance(0.11)}
           >
             {isMenuOpen ? (
               <X aria-hidden="true" size={21} />
             ) : (
               <Menu aria-hidden="true" size={21} />
             )}
-          </button>
+          </motion.button>
         </div>
 
         <AnimatePresence initial={false}>

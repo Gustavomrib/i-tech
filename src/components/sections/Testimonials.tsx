@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
 import {
   mockTestimonials,
@@ -7,6 +7,8 @@ import {
 } from '../../data/testimonials'
 import {
   createStaggerVariants,
+  motionDuration,
+  motionEase,
   revealItemVariants,
   sectionHeaderVariants,
 } from '../../lib/motion'
@@ -21,7 +23,20 @@ const testimonialLayout = [
   'lg:col-span-6',
 ] as const
 
-const listVariants = createStaggerVariants(0.075)
+const listVariants = createStaggerVariants(0.12, 0.04)
+
+const featuredTestimonialVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.99, y: 28 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.editorial,
+      ease: motionEase.reveal,
+    },
+  },
+}
 
 function TestimonialItem({
   testimonial,
@@ -41,7 +56,7 @@ function TestimonialItem({
       ]
         .filter(Boolean)
         .join(' ')}
-      variants={revealItemVariants}
+      variants={isFeatured ? featuredTestimonialVariants : revealItemVariants}
     >
       <figure className={isFeatured ? 'flex h-full flex-col' : ''}>
         <div className="flex items-center justify-between gap-4">

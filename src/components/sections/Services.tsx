@@ -18,23 +18,23 @@ const supportingServices = services.filter(
   (service) => service.priority !== 'primary',
 )
 
-const listVariants = createStaggerVariants(0.06)
+const listVariants = createStaggerVariants(0.1)
 
 const serviceVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: motionDuration.normal,
+      duration: motionDuration.reveal,
       ease: motionEase.reveal,
-      staggerChildren: 0.035,
+      staggerChildren: 0.065,
     },
   },
 }
 
 const servicePartVariants: Variants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0, y: 14 },
   visible: {
     opacity: 1,
     y: 0,

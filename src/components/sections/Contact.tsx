@@ -13,10 +13,10 @@ import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
 
-const optionsVariants = createStaggerVariants(0.05)
+const optionsVariants = createStaggerVariants(0.075)
 
 const optionVariants: Variants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -121,17 +121,26 @@ export function Contact() {
                       >
                         <span className="type-label text-text-muted">{option.number}</span>
                         <span className="font-semibold">{option.label}</span>
-                        <span
+                        <motion.span
+                          animate={{
+                            scale: prefersReducedMotion ? 1 : isSelected ? 1 : 0.78,
+                          }}
                           aria-hidden="true"
                           className={[
                             'inline-flex size-8 items-center justify-center rounded-full border transition-ui',
                             isSelected
-                              ? 'scale-100 border-primary bg-primary text-text-on-primary'
-                              : 'scale-75 border-border-highlight text-transparent',
+                              ? 'border-primary bg-primary text-text-on-primary'
+                              : 'border-border-highlight text-transparent',
                           ].join(' ')}
+                          transition={{
+                            duration: prefersReducedMotion
+                              ? 0
+                              : motionDuration.feedback,
+                            ease: motionEase.hover,
+                          }}
                         >
                           <Check size={16} strokeWidth={2.5} />
-                        </span>
+                        </motion.span>
                       </span>
                     </motion.label>
                   )
@@ -150,21 +159,23 @@ export function Contact() {
             </p>
 
             <motion.div
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               className="mt-5"
               initial={
-                prefersReducedMotion ? false : { opacity: 0.78, scale: 0.985 }
+                prefersReducedMotion
+                  ? false
+                  : { opacity: 0.62, scale: 0.98, y: 8 }
               }
               key={selectedOption ? 'contact-enabled' : 'contact-disabled'}
               transition={{
-                duration: prefersReducedMotion ? 0 : motionDuration.fast,
+                duration: prefersReducedMotion ? 0 : motionDuration.normal,
                 ease: motionEase.enter,
               }}
             >
               {selectedOption ? (
                 <Button
                   aria-describedby="contact-selection-status"
-                  className="w-full"
+                  className="w-full motion-safe:hover:-translate-y-0.5"
                   href={getWhatsAppUrl(selectedOption.message)}
                   rel="noopener noreferrer"
                   size="lg"
@@ -174,7 +185,7 @@ export function Contact() {
                   Conversar no WhatsApp
                   <ArrowUpRight
                     aria-hidden="true"
-                    className="transition-ui motion-safe:group-hover:translate-x-0.5"
+                    className="transition-ui motion-safe:group-hover:translate-x-1"
                     size={17}
                   />
                 </Button>

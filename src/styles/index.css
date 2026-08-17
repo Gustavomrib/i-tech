@@ -43,7 +43,7 @@
   --depth-shadow-surface: 0 1.25rem 3.5rem rgb(0 0 0 / 0.28);
   --depth-shadow-control: 0 0.625rem 1.75rem rgb(75 0 130 / 0.22);
   /* CSS microinteraction role; Motion reveals live in src/lib/motion.ts. */
-  --motion-fast: 200ms;
+  --motion-fast: 220ms;
   --motion-ease-hover: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* Typography roles: Arvo for display/identity, sans-serif for UI/reading. */

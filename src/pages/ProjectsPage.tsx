@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import { Footer } from '../components/layout/Footer'
 import { Navbar } from '../components/layout/Navbar'
@@ -9,8 +10,13 @@ import { ProjectCard } from '../components/projects/ProjectCard'
 import { Button } from '../components/ui/Button'
 import { projects } from '../data/projects'
 import { usePageMetadata } from '../hooks/usePageMetadata'
+import { createStaggerVariants } from '../lib/motion'
+
+const projectGridVariants = createStaggerVariants(0.11, 0.04)
 
 export function ProjectsPage() {
+  const prefersReducedMotion = useReducedMotion()
+
   usePageMetadata({
     title: "Trabalhos realizados | i'tech",
     description:
@@ -39,11 +45,17 @@ export function ProjectsPage() {
               </div>
             </header>
 
-            <div className="mt-12 grid items-start gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            <motion.div
+              className="mt-12 grid items-start gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+              initial={prefersReducedMotion ? false : 'hidden'}
+              variants={projectGridVariants}
+              viewport={{ once: true, amount: 0.12 }}
+              whileInView="visible"
+            >
               {projects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
-            </div>
+            </motion.div>
 
             <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 sm:flex-row sm:items-center sm:pt-10">
               <div>
