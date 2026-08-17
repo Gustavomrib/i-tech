@@ -26,7 +26,7 @@ export function ProjectsPage() {
           <Container>
             <header className="grid gap-6 border-b border-border pb-12 lg:grid-cols-12 lg:gap-8 lg:pb-16">
               <div className="lg:col-span-3">
-                <p className="type-label text-primary">Serviços realizados</p>
+                <p className="type-label text-primary">Trabalhos realizados</p>
               </div>
               <div className="lg:col-span-8 lg:col-start-5">
                 <h1 className="type-h1 text-text-primary">
@@ -52,7 +52,7 @@ export function ProjectsPage() {
 
             <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 sm:flex-row sm:items-center sm:pt-10">
               <div>
-                <h2 className="type-h3 text-text-primary">Tem um serviço em mente?</h2>
+                <h2 className="type-h3 text-text-primary">Tem um trabalho em mente?</h2>
                 <p className="mt-2 text-text-secondary">
                   Conte o que você precisa para o seu computador.
                 </p>

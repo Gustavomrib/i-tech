@@ -8,7 +8,7 @@ import { Container } from './Container'
 const navigationItems = [
   { label: 'Início', href: '/#inicio' },
   { label: 'Serviços', href: '/#servicos' },
-  { label: 'Trabalhos', href: '/projetos' },
+  { label: 'Trabalhos', href: '/#projetos' },
   { label: 'Sobre', href: '/#sobre' },
   { label: 'Contato', href: '/#contato' },
 ] as const
@@ -46,8 +46,7 @@ export function Navbar() {
   }, [isMenuOpen])
 
   const closeMenu = () => setIsMenuOpen(false)
-  const isCurrentPage = (href: string) =>
-    href === '/projetos' ? pathname.startsWith('/projetos') : href === '/#inicio' && pathname === '/'
+  const isCurrentPage = (href: string) => href === '/#inicio' && pathname === '/'
 
   return (
     <header
