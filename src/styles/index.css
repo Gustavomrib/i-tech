@@ -185,6 +185,49 @@
       opacity, transform;
     transition-timing-function: var(--motion-easing);
   }
+
+  .hero-page-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--border) 38%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 28%, transparent) 1px,
+        transparent 1px
+      );
+    background-position: center;
+    background-size: clamp(3rem, 6vw, 5rem) clamp(3rem, 6vw, 5rem);
+    mask-image: linear-gradient(to bottom, black, transparent 82%);
+  }
+
+  .hero-media {
+    aspect-ratio: 4 / 5;
+    min-height: 27rem;
+  }
+
+  .hero-technical-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--border-highlight) 42%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border-highlight) 42%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 2rem 2rem;
+    mask-image: linear-gradient(to bottom right, black, transparent 78%);
+  }
+}
+
+@media (max-width: 39.999rem) {
+  .hero-media {
+    aspect-ratio: 5 / 6;
+    min-height: 24rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

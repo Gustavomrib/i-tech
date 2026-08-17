@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
 
+import { HomePage } from './pages/HomePage'
 import { RoutePlaceholder } from './pages/RoutePlaceholder'
-import { SystemPreviewPage } from './pages/SystemPreviewPage'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <SystemPreviewPage />,
+    element: <HomePage />,
   },
   {
     path: '/projetos',
