@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { Container } from '../components/layout/Container'
+import { Footer } from '../components/layout/Footer'
 import { Navbar } from '../components/layout/Navbar'
 import { Section } from '../components/layout/Section'
 import { SkipLink } from '../components/layout/SkipLink'
@@ -51,6 +52,7 @@ function ProjectNotFound() {
           </Container>
         </Section>
       </main>
+      <Footer />
     </>
   )
 }
@@ -358,6 +360,7 @@ export function ProjectCasePage() {
           </Section>
         </article>
       </main>
+      <Footer />
     </>
   )
 }

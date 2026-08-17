@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { Footer } from '../components/layout/Footer'
 import { Navbar } from '../components/layout/Navbar'
 import { SkipLink } from '../components/layout/SkipLink'
 import { AboutTeam } from '../components/sections/AboutTeam'
@@ -39,6 +40,7 @@ export function HomePage() {
         <Faq />
         <Contact />
       </main>
+      <Footer />
     </>
   )
 }

@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 
+import { Footer } from '../components/layout/Footer'
 import { Navbar } from '../components/layout/Navbar'
 import { SkipLink } from '../components/layout/SkipLink'
 import { Container } from '../components/layout/Container'
@@ -65,6 +66,7 @@ export function ProjectsPage() {
           </Container>
         </Section>
       </main>
+      <Footer />
     </>
   )
 }
