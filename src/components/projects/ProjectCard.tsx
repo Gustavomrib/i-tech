@@ -65,13 +65,13 @@ export function ProjectCard({
           {project.shortDescription}
         </p>
         <Button
-          aria-label={`Ver projeto: ${project.title}`}
+          aria-label={`Ver serviço: ${project.title}`}
           className="-ml-4 mt-5"
           size="sm"
           to={`/projetos/${project.slug}`}
           variant="ghost"
         >
-          Ver projeto
+          Ver serviço
           <ArrowUpRight aria-hidden="true" size={17} />
         </Button>
       </div>

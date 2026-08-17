@@ -8,7 +8,7 @@ import { Container } from './Container'
 const navigationItems = [
   { label: 'Início', href: '/#inicio' },
   { label: 'Serviços', href: '/#servicos' },
-  { label: 'Projetos', href: '/projetos' },
+  { label: 'Trabalhos', href: '/projetos' },
   { label: 'Sobre', href: '/#sobre' },
   { label: 'Contato', href: '/#contato' },
 ] as const

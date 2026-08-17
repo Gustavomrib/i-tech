@@ -37,16 +37,16 @@ function ProjectNotFound() {
       <main id="conteudo-principal">
         <Section className="min-h-screen bg-background pt-32 sm:pt-36">
           <Container className="max-w-content-narrow">
-            <p className="type-label text-primary">Projeto não encontrado</p>
+            <p className="type-label text-primary">Serviço não encontrado</p>
             <h1 className="type-h1 mt-4 text-text-primary">
-              Este endereço não corresponde a um projeto.
+              Este endereço não corresponde a um serviço realizado.
             </h1>
             <p className="type-body mt-6 max-w-2xl text-text-secondary">
-              Confira os projetos disponíveis na página de projetos.
+              Confira os serviços realizados disponíveis na listagem.
             </p>
             <Button className="mt-8" to="/projetos" variant="secondary">
               <ArrowLeft aria-hidden="true" size={18} />
-              Voltar aos projetos
+              Voltar aos serviços realizados
             </Button>
           </Container>
         </Section>
@@ -60,18 +60,18 @@ function ProjectNavigation({ project }: { project: Project }) {
 
   return (
     <nav
-      aria-label="Navegação entre projetos"
+      aria-label="Navegação entre serviços realizados"
       className="mt-12 grid gap-4 border-t border-border pt-8 sm:mt-16 sm:grid-cols-2 sm:pt-10"
     >
       {previous ? (
         <Link
-          aria-label={`Projeto anterior: ${previous.title}`}
+          aria-label={`Serviço anterior: ${previous.title}`}
           className="group min-w-0 border-l border-border-highlight p-5 transition-ui hover:border-primary hover:bg-surface focus-visible:outline-focus"
           to={`/projetos/${previous.slug}`}
         >
           <span className="type-label flex items-center gap-2 text-text-muted">
             <ArrowLeft aria-hidden="true" size={15} />
-            Projeto anterior
+            Serviço anterior
           </span>
           <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:translate-x-1">
             {previous.title}
@@ -81,12 +81,12 @@ function ProjectNavigation({ project }: { project: Project }) {
 
       {next ? (
         <Link
-          aria-label={`Próximo projeto: ${next.title}`}
+          aria-label={`Próximo serviço: ${next.title}`}
           className="group min-w-0 border-r border-border-highlight p-5 text-right transition-ui hover:border-primary hover:bg-surface focus-visible:outline-focus sm:col-start-2"
           to={`/projetos/${next.slug}`}
         >
           <span className="type-label flex items-center justify-end gap-2 text-text-muted">
-            Próximo projeto
+            Próximo serviço
             <ArrowRight aria-hidden="true" size={15} />
           </span>
           <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:-translate-x-1">
@@ -121,7 +121,7 @@ export function ProjectCasePage() {
             <Container className="layout-container-wide">
               <Button className="-ml-4" size="sm" to="/projetos" variant="ghost">
                 <ArrowLeft aria-hidden="true" size={17} />
-                Todos os projetos
+                Todos os serviços realizados
               </Button>
 
               <motion.div
@@ -297,7 +297,7 @@ export function ProjectCasePage() {
                   </p>
                   <div className="lg:col-span-8 lg:col-start-5">
                     <h2 className="type-h2 text-text-primary" id="project-gallery-title">
-                      Galeria do projeto
+                      Galeria do serviço
                     </h2>
                   </div>
                 </div>

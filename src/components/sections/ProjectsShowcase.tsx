@@ -29,7 +29,7 @@ export function ProjectsShowcase() {
           viewport={{ once: true, amount: 0.5 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <p className="type-label text-primary lg:col-span-3">Projetos</p>
+          <p className="type-label text-primary lg:col-span-3">Serviços realizados</p>
           <div className="lg:col-span-8 lg:col-start-5">
             <h2 className="type-h1 text-text-primary" id="projects-title">
               Máquinas que passaram pela nossa <span className="text-primary">bancada.</span>
@@ -53,7 +53,7 @@ export function ProjectsShowcase() {
 
         <div className="mt-12 flex justify-start border-t border-border pt-8 sm:mt-16 sm:justify-end sm:pt-10">
           <Button className="w-full sm:w-auto" to="/projetos" variant="secondary">
-            Ver todos os projetos
+            Ver todos os serviços realizados
             <ArrowUpRight aria-hidden="true" size={18} />
           </Button>
         </div>
