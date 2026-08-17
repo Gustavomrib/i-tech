@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { Navbar } from '../components/layout/Navbar'
 import { SkipLink } from '../components/layout/SkipLink'
+import { AboutTeam } from '../components/sections/AboutTeam'
 import { Hero } from '../components/sections/Hero'
 import { ProjectsShowcase } from '../components/sections/ProjectsShowcase'
 import { ServiceProcess } from '../components/sections/ServiceProcess'
@@ -30,6 +31,7 @@ export function HomePage() {
         <Services />
         <ServiceProcess />
         <ProjectsShowcase />
+        <AboutTeam />
       </main>
     </>
   )
