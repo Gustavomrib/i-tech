@@ -288,6 +288,21 @@
   .process-content {
     min-width: 0;
   }
+
+  .project-media-placeholder {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--border-highlight) 34%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border-highlight) 34%, transparent) 1px,
+        transparent 1px
+      );
+    background-position: center;
+    background-size: clamp(2.5rem, 5vw, 4rem) clamp(2.5rem, 5vw, 4rem);
+  }
 }
 
 @media (max-width: 39.999rem) {

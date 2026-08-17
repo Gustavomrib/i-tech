@@ -1,22 +1,35 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import { Navbar } from '../components/layout/Navbar'
+import { SkipLink } from '../components/layout/SkipLink'
 import { Hero } from '../components/sections/Hero'
+import { ProjectsShowcase } from '../components/sections/ProjectsShowcase'
 import { ServiceProcess } from '../components/sections/ServiceProcess'
 import { Services } from '../components/sections/Services'
 
 export function HomePage() {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView()
+    })
+
+    return () => window.cancelAnimationFrame(animationFrame)
+  }, [hash])
+
   return (
     <>
-      <a
-        className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-control bg-primary px-4 py-3 font-semibold text-text-on-primary transition-ui focus:translate-y-0"
-        href="#conteudo-principal"
-      >
-        Pular para o conteúdo
-      </a>
+      <SkipLink />
       <Navbar />
       <main id="conteudo-principal">
         <Hero />
         <Services />
         <ServiceProcess />
+        <ProjectsShowcase />
       </main>
     </>
   )

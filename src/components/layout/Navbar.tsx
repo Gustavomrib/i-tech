@@ -1,16 +1,16 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { Button } from '../ui/Button'
 import { Container } from './Container'
 
 const navigationItems = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Serviços', href: '#servicos' },
+  { label: 'Início', href: '/#inicio' },
+  { label: 'Serviços', href: '/#servicos' },
   { label: 'Projetos', href: '/projetos' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Contato', href: '#contato' },
+  { label: 'Sobre', href: '/#sobre' },
+  { label: 'Contato', href: '/#contato' },
 ] as const
 
 const navigationLinkStyles =
@@ -19,6 +19,7 @@ const navigationLinkStyles =
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { pathname } = useLocation()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -45,6 +46,8 @@ export function Navbar() {
   }, [isMenuOpen])
 
   const closeMenu = () => setIsMenuOpen(false)
+  const isCurrentPage = (href: string) =>
+    href === '/projetos' ? pathname.startsWith('/projetos') : href === '/#inicio' && pathname === '/'
 
   return (
     <header
@@ -70,26 +73,20 @@ export function Navbar() {
             <ul className="flex items-center gap-1">
               {navigationItems.map((item) => (
                 <li key={item.label}>
-                  {item.href.startsWith('/') ? (
-                    <Link className={navigationLinkStyles} to={item.href}>
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      aria-current={item.href === '#inicio' ? 'page' : undefined}
-                      className={navigationLinkStyles}
-                      href={item.href}
-                    >
-                      {item.label}
-                    </a>
-                  )}
+                  <Link
+                    aria-current={isCurrentPage(item.href) ? 'page' : undefined}
+                    className={navigationLinkStyles}
+                    to={item.href}
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
           <div className="hidden md:block">
-            <Button href="#contato" size="sm" variant="secondary">
+            <Button size="sm" to="/#contato" variant="secondary">
               Solicitar orçamento
             </Button>
           </div>
@@ -120,28 +117,18 @@ export function Navbar() {
             <ul className="grid gap-1">
               {navigationItems.map((item) => (
                 <li key={item.label}>
-                  {item.href.startsWith('/') ? (
-                    <Link
-                      className="block rounded-control px-3 py-3 text-base font-medium text-text-secondary transition-ui hover:bg-surface-hover hover:text-text-primary focus-visible:outline-focus"
-                      onClick={closeMenu}
-                      to={item.href}
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      aria-current={item.href === '#inicio' ? 'page' : undefined}
-                      className="block rounded-control px-3 py-3 text-base font-medium text-text-secondary transition-ui hover:bg-surface-hover hover:text-text-primary focus-visible:outline-focus"
-                      href={item.href}
-                      onClick={closeMenu}
-                    >
-                      {item.label}
-                    </a>
-                  )}
+                  <Link
+                    aria-current={isCurrentPage(item.href) ? 'page' : undefined}
+                    className="block rounded-control px-3 py-3 text-base font-medium text-text-secondary transition-ui hover:bg-surface-hover hover:text-text-primary focus-visible:outline-focus"
+                    onClick={closeMenu}
+                    to={item.href}
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
-            <Button className="mt-3 w-full" href="#contato" onClick={closeMenu}>
+            <Button className="mt-3 w-full" onClick={closeMenu} to="/#contato">
               Solicitar orçamento
             </Button>
           </nav>

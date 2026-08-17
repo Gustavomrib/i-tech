@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import { HomePage } from './pages/HomePage'
-import { RoutePlaceholder } from './pages/RoutePlaceholder'
+import { ProjectDetailPlaceholder } from './pages/ProjectDetailPlaceholder'
+import { ProjectsPage } from './pages/ProjectsPage'
 
 export const router = createBrowserRouter([
   {
@@ -10,10 +11,10 @@ export const router = createBrowserRouter([
   },
   {
     path: '/projetos',
-    element: <RoutePlaceholder route="/projetos" />,
+    element: <ProjectsPage />,
   },
   {
     path: '/projetos/:slug',
-    element: <RoutePlaceholder route="/projetos/:slug" />,
+    element: <ProjectDetailPlaceholder />,
   },
 ])
