@@ -35,7 +35,13 @@ export function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
     >
       <ProjectMediaFrame
-        className={isFeatured ? 'aspect-[4/3]' : 'aspect-video'}
+        className={
+          project.media.kind === 'placeholder'
+            ? isFeatured
+              ? 'aspect-[4/3]'
+              : 'aspect-video'
+            : undefined
+        }
         interactive
         media={project.media}
         meta={project.equipmentType}

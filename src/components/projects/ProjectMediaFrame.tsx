@@ -18,7 +18,7 @@ export function ProjectMediaFrame({
   return (
     <div
       className={[
-        'relative overflow-hidden border border-border bg-background',
+        'relative overflow-hidden border border-border bg-surface',
         className,
       ]
         .filter(Boolean)
@@ -27,10 +27,7 @@ export function ProjectMediaFrame({
       {media.kind === 'image' ? (
         <img
           alt={media.alt}
-          className={[
-            'h-full w-full object-cover transition-ui',
-            interactive ? 'motion-safe:group-hover:scale-[1.02]' : '',
-          ].join(' ')}
+          className="block h-auto w-full object-contain"
           decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}
           height={media.height}

@@ -165,7 +165,11 @@ export function ProjectCasePage() {
                 transition={{ delay: 0.15, duration: 0.55 }}
               >
                 <ProjectMediaFrame
-                  className="mx-auto aspect-[3/4] max-w-4xl"
+                  className={
+                    project.media.kind === 'placeholder'
+                      ? 'mx-auto aspect-[3/4] max-w-4xl'
+                      : 'mx-auto max-w-4xl'
+                  }
                   media={project.media}
                   meta="Fotografia principal"
                   priority
@@ -315,7 +319,11 @@ export function ProjectCasePage() {
                       key={`${media.role}-${index}`}
                     >
                       <ProjectMediaFrame
-                        className={galleryAspect[index] ?? 'aspect-[4/3]'}
+                        className={
+                          media.kind === 'placeholder'
+                            ? (galleryAspect[index] ?? 'aspect-[4/3]')
+                            : undefined
+                        }
                         media={media}
                       />
                       {media.caption ? (
