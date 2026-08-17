@@ -1,13 +1,13 @@
 import { ArrowUpRight } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import { mockProjects } from '../../data/projects'
+import { projects } from '../../data/projects'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { ProjectCard } from '../projects/ProjectCard'
 import { Button } from '../ui/Button'
 
-const homeProjects = mockProjects.slice(0, 3)
+const homeProjects = projects.slice(0, 3)
 const projectLayout = [
   'lg:col-span-7 lg:row-span-2',
   'lg:col-span-5',
@@ -29,16 +29,13 @@ export function ProjectsShowcase() {
           viewport={{ once: true, amount: 0.5 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <div className="lg:col-span-3">
-            <p className="type-label text-primary">Projetos</p>
-            <p className="type-small mt-3 text-text-muted">Conteúdo demonstrativo</p>
-          </div>
+          <p className="type-label text-primary lg:col-span-3">Projetos</p>
           <div className="lg:col-span-8 lg:col-start-5">
             <h2 className="type-h1 text-text-primary" id="projects-title">
               Máquinas que passaram pela nossa <span className="text-primary">bancada.</span>
             </h2>
             <p className="type-body mt-6 max-w-2xl text-text-secondary">
-              Montagem, manutenção e performance vistas na prática.
+              Limpeza e manutenção vistas na prática.
             </p>
           </div>
         </motion.header>

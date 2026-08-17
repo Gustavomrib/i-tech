@@ -6,7 +6,7 @@ import { Container } from '../components/layout/Container'
 import { Section } from '../components/layout/Section'
 import { ProjectCard } from '../components/projects/ProjectCard'
 import { Button } from '../components/ui/Button'
-import { mockProjects } from '../data/projects'
+import { projects } from '../data/projects'
 
 const projectLayout = [
   'lg:col-span-7',
@@ -27,21 +27,20 @@ export function ProjectsPage() {
             <header className="grid gap-6 border-b border-border pb-12 lg:grid-cols-12 lg:gap-8 lg:pb-16">
               <div className="lg:col-span-3">
                 <p className="type-label text-primary">Projetos i&apos;tech</p>
-                <p className="type-small mt-3 text-text-muted">Conteúdo demonstrativo</p>
               </div>
               <div className="lg:col-span-8 lg:col-start-5">
                 <h1 className="type-h1 text-text-primary">
                   Trabalho técnico visto de <span className="text-primary">perto.</span>
                 </h1>
                 <p className="type-body mt-6 max-w-2xl text-text-secondary">
-                  Uma estrutura preparada para documentar montagem, manutenção,
-                  diagnóstico e evolução de cada máquina.
+                  Trabalhos reais de limpeza e manutenção documentados em nossa
+                  bancada.
                 </p>
               </div>
             </header>
 
             <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-y-20">
-              {mockProjects.map((project, index) => (
+              {projects.map((project, index) => (
                 <ProjectCard
                   className={projectLayout[index] ?? 'lg:col-span-6'}
                   key={project.id}

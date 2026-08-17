@@ -42,7 +42,7 @@ function ProjectNotFound() {
               Este endereço não corresponde a um projeto.
             </h1>
             <p className="type-body mt-6 max-w-2xl text-text-secondary">
-              Confira os projetos demonstrativos disponíveis na página de projetos.
+              Confira os projetos disponíveis na página de projetos.
             </p>
             <Button className="mt-8" to="/projetos" variant="secondary">
               <ArrowLeft aria-hidden="true" size={18} />
@@ -101,6 +101,7 @@ function ProjectNavigation({ project }: { project: Project }) {
 export function ProjectCasePage() {
   const { slug } = useParams()
   const project = getProjectBySlug(slug)
+  const gallery = project?.gallery ?? []
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
@@ -151,8 +152,8 @@ export function ProjectCasePage() {
                     <dd className="mt-2 text-sm text-text-primary">{project.category}</dd>
                   </div>
                   <div>
-                    <dt className="type-label text-text-muted">Status do conteúdo</dt>
-                    <dd className="mt-2 text-sm text-text-secondary">Demonstrativo</dd>
+                    <dt className="type-label text-text-muted">Registro</dt>
+                    <dd className="mt-2 text-sm text-text-secondary">Serviço real</dd>
                   </div>
                 </dl>
               </motion.div>
@@ -164,7 +165,7 @@ export function ProjectCasePage() {
                 transition={{ delay: 0.15, duration: 0.55 }}
               >
                 <ProjectMediaFrame
-                  className="aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/7]"
+                  className="mx-auto aspect-[3/4] max-w-4xl"
                   media={project.media}
                   meta="Fotografia principal"
                   priority
@@ -284,48 +285,50 @@ export function ProjectCasePage() {
             </Container>
           </Section>
 
-          <Section
-            aria-labelledby="project-gallery-title"
-            className="border-y border-border bg-background-secondary"
-          >
-            <Container>
-              <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-                <p className="type-label text-primary lg:col-span-3">Documentação visual</p>
-                <div className="lg:col-span-8 lg:col-start-5">
-                  <h2 className="type-h2 text-text-primary" id="project-gallery-title">
-                    Galeria do projeto
-                  </h2>
-                  <p className="mt-5 max-w-2xl leading-relaxed text-text-secondary">
-                    Espaços preparados para registrar o equipamento, os detalhes e o
-                    processo quando as fotografias reais estiverem disponíveis.
+          {gallery.length ? (
+            <Section
+              aria-labelledby="project-gallery-title"
+              className="border-y border-border bg-background-secondary"
+            >
+              <Container>
+                <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+                  <p className="type-label text-primary lg:col-span-3">
+                    Documentação visual
                   </p>
+                  <div className="lg:col-span-8 lg:col-start-5">
+                    <h2 className="type-h2 text-text-primary" id="project-gallery-title">
+                      Galeria do projeto
+                    </h2>
+                  </div>
                 </div>
-              </div>
 
-              <motion.div
-                className="mt-12 grid gap-x-6 gap-y-10 sm:mt-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-14"
-                initial={{ opacity: 0, y: 10 }}
-                viewport={{ once: true, amount: 0.1 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              >
-                {project.gallery.map((media, index) => (
-                  <figure
-                    className={galleryLayout[index] ?? 'lg:col-span-6'}
-                    key={`${media.role}-${index}`}
-                  >
-                    <ProjectMediaFrame
-                      className={galleryAspect[index] ?? 'aspect-[4/3]'}
-                      media={media}
-                    />
-                    <figcaption className="type-small mt-3 text-text-muted">
-                      {media.caption}
-                    </figcaption>
-                  </figure>
-                ))}
-              </motion.div>
-            </Container>
-          </Section>
+                <motion.div
+                  className="mt-12 grid gap-x-6 gap-y-10 sm:mt-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-14"
+                  initial={{ opacity: 0, y: 10 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+                >
+                  {gallery.map((media, index) => (
+                    <figure
+                      className={galleryLayout[index] ?? 'lg:col-span-6'}
+                      key={`${media.role}-${index}`}
+                    >
+                      <ProjectMediaFrame
+                        className={galleryAspect[index] ?? 'aspect-[4/3]'}
+                        media={media}
+                      />
+                      {media.caption ? (
+                        <figcaption className="type-small mt-3 text-text-muted">
+                          {media.caption}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  ))}
+                </motion.div>
+              </Container>
+            </Section>
+          ) : null}
 
           <Section className="bg-background">
             <Container>
