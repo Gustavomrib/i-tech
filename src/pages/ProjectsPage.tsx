@@ -8,6 +8,7 @@ import { Section } from '../components/layout/Section'
 import { ProjectCard } from '../components/projects/ProjectCard'
 import { Button } from '../components/ui/Button'
 import { projects } from '../data/projects'
+import { usePageMetadata } from '../hooks/usePageMetadata'
 
 const projectLayout = [
   'lg:col-span-7',
@@ -18,6 +19,12 @@ const projectLayout = [
 ] as const
 
 export function ProjectsPage() {
+  usePageMetadata({
+    title: "Trabalhos realizados | i'tech",
+    description:
+      "Conheça trabalhos reais de limpeza e manutenção de PCs documentados pela i'tech, que atende Volta Redonda e região.",
+  })
+
   return (
     <>
       <SkipLink />

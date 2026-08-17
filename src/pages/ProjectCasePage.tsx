@@ -15,6 +15,7 @@ import {
   getProjectBySlug,
   type Project,
 } from '../data/projects'
+import { usePageMetadata } from '../hooks/usePageMetadata'
 
 const galleryLayout = [
   'lg:col-span-8',
@@ -104,6 +105,17 @@ export function ProjectCasePage() {
   const { slug } = useParams()
   const project = getProjectBySlug(slug)
   const gallery = project?.gallery ?? []
+
+  usePageMetadata({
+    title: project
+      ? `${project.title} | i'tech`
+      : "Trabalho não encontrado | i'tech",
+    description: project
+      ? `${project.shortDescription} Conheça a abordagem e o resultado do trabalho realizado pela i'tech.`
+      : "O trabalho solicitado não foi encontrado. Consulte os trabalhos realizados pela i'tech.",
+    type: project ? 'article' : 'website',
+    robots: project ? 'index, follow' : 'noindex, follow',
+  })
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })

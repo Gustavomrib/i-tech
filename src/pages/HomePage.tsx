@@ -12,9 +12,19 @@ import { ProjectsShowcase } from '../components/sections/ProjectsShowcase'
 import { ServiceProcess } from '../components/sections/ServiceProcess'
 import { Services } from '../components/sections/Services'
 import { Testimonials } from '../components/sections/Testimonials'
+import { usePageMetadata } from '../hooks/usePageMetadata'
+
+const homeTitle = "i'tech | Hardware, manutenção e performance em Volta Redonda"
+const homeDescription =
+  'Montagem, diagnóstico, limpeza, manutenção, upgrades e otimização de PCs em Volta Redonda e região. Atendimento com retirada combinada e orçamento antes do serviço.'
 
 export function HomePage() {
   const { hash } = useLocation()
+
+  usePageMetadata({
+    title: homeTitle,
+    description: homeDescription,
+  })
 
   useEffect(() => {
     if (!hash) return
