@@ -1,4 +1,3 @@
-import { ArrowUpRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 
 import {
@@ -13,7 +12,6 @@ import {
 } from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
-import { Button } from '../ui/Button'
 
 const testimonialLayout = [
   'lg:col-span-7 lg:row-span-2',
@@ -100,7 +98,9 @@ export function Testimonials() {
           <div className="lg:col-span-3">
             <p className="type-label text-primary">Experiências</p>
             {hasMockContent ? (
-              <p className="type-small mt-3 text-text-muted">Conteúdo demonstrativo</p>
+              <p className="type-small mt-3 text-text-muted">
+                Depoimentos demonstrativos
+              </p>
             ) : null}
           </div>
           <div className="lg:col-span-8 lg:col-start-5">
@@ -157,25 +157,6 @@ export function Testimonials() {
             />
           ))}
         </motion.ol>
-
-        <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 sm:mt-16 sm:flex-row sm:items-center sm:pt-10">
-          <div>
-            <h3 className="type-h3 text-text-primary">
-              Seu PC também pode receber esse cuidado.
-            </h3>
-            <p className="mt-2 text-text-secondary">
-              Conte o que sua máquina precisa.
-            </p>
-          </div>
-          <Button className="w-full sm:w-auto" to="/#contato">
-            Solicitar orçamento
-            <ArrowUpRight
-              aria-hidden="true"
-              className="transition-ui motion-safe:group-hover:translate-x-0.5"
-              size={18}
-            />
-          </Button>
-        </div>
       </Container>
     </Section>
   )
