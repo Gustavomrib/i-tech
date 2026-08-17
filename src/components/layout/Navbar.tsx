@@ -1,7 +1,9 @@
 import { Menu, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion, type Variants } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { motionDuration, motionEase } from '../../lib/motion'
 import { Button } from '../ui/Button'
 import { Container } from './Container'
 
@@ -16,11 +18,45 @@ const navigationItems = [
 const navigationLinkStyles =
   'rounded-control px-3 py-2 text-sm font-medium text-text-secondary transition-ui hover:text-text-primary focus-visible:outline-focus'
 
+const mobileMenuVariants: Variants = {
+  closed: {
+    opacity: 0,
+    y: -8,
+    transition: {
+      duration: motionDuration.feedback,
+      ease: motionEase.exit,
+      when: 'afterChildren',
+      staggerChildren: 0.02,
+      staggerDirection: -1,
+    },
+  },
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.fast,
+      ease: motionEase.enter,
+      when: 'beforeChildren',
+      staggerChildren: 0.035,
+    },
+  },
+}
+
+const mobileMenuItemVariants: Variants = {
+  closed: { opacity: 0, y: -4 },
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: motionDuration.feedback, ease: motionEase.enter },
+  },
+}
+
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { pathname } = useLocation()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12)
@@ -61,7 +97,10 @@ export function Navbar() {
         <div className="flex h-18 items-center justify-between gap-6">
           <Link
             aria-label="i'tech — página inicial"
-            className="rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl"
+            className={[
+              'rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl',
+              isScrolled ? 'motion-safe:md:scale-[0.97]' : '',
+            ].join(' ')}
             onClick={closeMenu}
             to="/"
           >
@@ -107,31 +146,39 @@ export function Navbar() {
           </button>
         </div>
 
-        {isMenuOpen ? (
-          <nav
-            aria-label="Navegação mobile"
-            className="border-t border-border pb-5 pt-3 md:hidden"
-            id="mobile-navigation"
-          >
-            <ul className="grid gap-1">
-              {navigationItems.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    aria-current={isCurrentPage(item.href) ? 'page' : undefined}
-                    className="block rounded-control px-3 py-3 text-base font-medium text-text-secondary transition-ui hover:bg-surface-hover hover:text-text-primary focus-visible:outline-focus"
-                    onClick={closeMenu}
-                    to={item.href}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Button className="mt-3 w-full" onClick={closeMenu} to="/#contato">
-              Solicitar orçamento
-            </Button>
-          </nav>
-        ) : null}
+        <AnimatePresence initial={false}>
+          {isMenuOpen ? (
+            <motion.nav
+              animate="open"
+              aria-label="Navegação mobile"
+              className="border-t border-border pb-5 pt-3 md:hidden"
+              exit="closed"
+              id="mobile-navigation"
+              initial={prefersReducedMotion ? false : 'closed'}
+              variants={prefersReducedMotion ? undefined : mobileMenuVariants}
+            >
+              <motion.ul className="grid gap-1">
+                {navigationItems.map((item) => (
+                  <motion.li key={item.label} variants={mobileMenuItemVariants}>
+                    <Link
+                      aria-current={isCurrentPage(item.href) ? 'page' : undefined}
+                      className="block rounded-control px-3 py-3 text-base font-medium text-text-secondary transition-ui hover:bg-surface-hover hover:text-text-primary focus-visible:outline-focus"
+                      onClick={closeMenu}
+                      to={item.href}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </motion.ul>
+              <motion.div variants={mobileMenuItemVariants}>
+                <Button className="mt-3 w-full" onClick={closeMenu} to="/#contato">
+                  Solicitar orçamento
+                </Button>
+              </motion.div>
+            </motion.nav>
+          ) : null}
+        </AnimatePresence>
       </Container>
     </header>
   )

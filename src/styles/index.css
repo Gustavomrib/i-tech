@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../";
 
 :root {
   color-scheme: dark;
@@ -41,8 +42,9 @@
   --border-width: 1px;
   --depth-shadow-surface: 0 1.25rem 3.5rem rgb(0 0 0 / 0.28);
   --depth-shadow-control: 0 0.625rem 1.75rem rgb(75 0 130 / 0.22);
-  --motion-duration: 180ms;
-  --motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* CSS microinteraction role; Motion reveals live in src/lib/motion.ts. */
+  --motion-fast: 200ms;
+  --motion-ease-hover: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* Typography roles: Arvo for display/identity, sans-serif for UI/reading. */
   --font-family-display: "Arvo", ui-serif, serif;
@@ -76,8 +78,8 @@
   --shadow-surface: var(--depth-shadow-surface);
   --shadow-control: var(--depth-shadow-control);
   --container-content-narrow: var(--container-narrow);
-  --default-transition-duration: var(--motion-duration);
-  --default-transition-timing-function: var(--motion-easing);
+  --default-transition-duration: var(--motion-fast);
+  --default-transition-timing-function: var(--motion-ease-hover);
 
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -189,10 +191,10 @@
   }
 
   .transition-ui {
-    transition-duration: var(--motion-duration);
+    transition-duration: var(--motion-fast);
     transition-property: color, background-color, border-color, box-shadow,
       opacity, transform;
-    transition-timing-function: var(--motion-easing);
+    transition-timing-function: var(--motion-ease-hover);
   }
 
   .hero-page-grid {

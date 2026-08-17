@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -16,6 +16,12 @@ import {
   type Project,
 } from '../data/projects'
 import { usePageMetadata } from '../hooks/usePageMetadata'
+import {
+  createStaggerVariants,
+  motionDuration,
+  motionEase,
+  revealItemVariants,
+} from '../lib/motion'
 
 const galleryLayout = [
   'lg:col-span-8',
@@ -30,6 +36,9 @@ const galleryAspect = [
   'aspect-square',
   'aspect-[4/3]',
 ] as const
+
+const caseHeaderVariants = createStaggerVariants(0.075, 0.04)
+const caseCopyVariants = createStaggerVariants(0.065)
 
 function ProjectNotFound() {
   return (
@@ -73,10 +82,14 @@ function ProjectNavigation({ project }: { project: Project }) {
           to={`/projetos/${previous.slug}`}
         >
           <span className="type-label flex items-center gap-2 text-text-muted">
-            <ArrowLeft aria-hidden="true" size={15} />
+            <ArrowLeft
+              aria-hidden="true"
+              className="transition-ui motion-safe:group-hover:-translate-x-0.5"
+              size={15}
+            />
             Trabalho anterior
           </span>
-          <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:translate-x-1">
+          <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:-translate-x-1">
             {previous.title}
           </span>
         </Link>
@@ -90,9 +103,13 @@ function ProjectNavigation({ project }: { project: Project }) {
         >
           <span className="type-label flex items-center justify-end gap-2 text-text-muted">
             Próximo trabalho
-            <ArrowRight aria-hidden="true" size={15} />
+            <ArrowRight
+              aria-hidden="true"
+              className="transition-ui motion-safe:group-hover:translate-x-0.5"
+              size={15}
+            />
           </span>
-          <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:-translate-x-1">
+          <span className="mt-3 block font-display text-lg font-bold leading-snug text-text-primary transition-ui motion-safe:group-hover:translate-x-1">
             {next.title}
           </span>
         </Link>
@@ -103,6 +120,7 @@ function ProjectNavigation({ project }: { project: Project }) {
 
 export function ProjectCasePage() {
   const { slug } = useParams()
+  const prefersReducedMotion = useReducedMotion()
   const project = getProjectBySlug(slug)
   const gallery = project?.gallery ?? []
 
@@ -139,24 +157,36 @@ export function ProjectCasePage() {
               </Button>
 
               <motion.div
+                animate="visible"
                 className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-8"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+                initial={prefersReducedMotion ? false : 'hidden'}
+                variants={caseHeaderVariants}
               >
-                <div className="lg:col-span-8">
-                  <p className="type-label text-primary">
+                <motion.div
+                  className="lg:col-span-8"
+                  variants={caseCopyVariants}
+                >
+                  <motion.p className="type-label text-primary" variants={revealItemVariants}>
                     {project.number} / {project.category}
-                  </p>
-                  <h1 className="type-h1 mt-5 max-w-5xl text-text-primary">
+                  </motion.p>
+                  <motion.h1
+                    className="type-h1 mt-5 max-w-5xl text-text-primary"
+                    variants={revealItemVariants}
+                  >
                     {project.title}
-                  </h1>
-                  <p className="type-body mt-6 max-w-2xl text-text-secondary">
+                  </motion.h1>
+                  <motion.p
+                    className="type-body mt-6 max-w-2xl text-text-secondary"
+                    variants={revealItemVariants}
+                  >
                     {project.shortDescription}
-                  </p>
-                </div>
+                  </motion.p>
+                </motion.div>
 
-                <dl className="grid gap-5 border-l border-border-highlight pl-5 sm:grid-cols-3 sm:border-l-0 sm:border-t sm:pl-0 sm:pt-5 lg:col-span-3 lg:col-start-10 lg:grid-cols-1 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                <motion.dl
+                  className="grid gap-5 border-l border-border-highlight pl-5 sm:grid-cols-3 sm:border-l-0 sm:border-t sm:pl-0 sm:pt-5 lg:col-span-3 lg:col-start-10 lg:grid-cols-1 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0"
+                  variants={revealItemVariants}
+                >
                   <div>
                     <dt className="type-label text-text-muted">Equipamento</dt>
                     <dd className="mt-2 text-sm text-text-primary">{project.equipmentType}</dd>
@@ -169,14 +199,18 @@ export function ProjectCasePage() {
                     <dt className="type-label text-text-muted">Registro</dt>
                     <dd className="mt-2 text-sm text-text-secondary">Trabalho real</dd>
                   </div>
-                </dl>
+                </motion.dl>
               </motion.div>
 
               <motion.div
                 className="mt-12 sm:mt-16"
-                initial={{ opacity: 0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.55 }}
+                transition={{
+                  delay: 0.32,
+                  duration: motionDuration.reveal,
+                  ease: motionEase.reveal,
+                }}
               >
                 <ProjectMediaFrame
                   className={
@@ -322,10 +356,10 @@ export function ProjectCasePage() {
 
                 <motion.div
                   className="mt-12 grid gap-x-6 gap-y-10 sm:mt-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-14"
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={prefersReducedMotion ? false : 'hidden'}
+                  variants={revealItemVariants}
                   viewport={{ once: true, amount: 0.1 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+                  whileInView="visible"
                 >
                   {gallery.map((media, index) => (
                     <figure
@@ -363,7 +397,11 @@ export function ProjectCasePage() {
                 </div>
                 <Button className="w-full sm:w-auto" to="/#contato">
                   Solicitar orçamento
-                  <ArrowUpRight aria-hidden="true" size={18} />
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="transition-ui motion-safe:group-hover:translate-x-0.5"
+                    size={18}
+                  />
                 </Button>
               </div>
 

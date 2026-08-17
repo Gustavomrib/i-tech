@@ -39,7 +39,7 @@ export type ButtonProps =
   | RouterButtonProps
 
 const baseStyles =
-  'inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-control border px-5 font-semibold tracking-tight transition-ui focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none aria-disabled:opacity-45'
+  'group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-control border px-5 font-semibold tracking-tight transition-ui focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none aria-disabled:opacity-45'
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:

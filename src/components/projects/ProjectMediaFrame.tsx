@@ -19,6 +19,9 @@ export function ProjectMediaFrame({
     <div
       className={[
         'relative overflow-hidden border border-border bg-surface',
+        interactive
+          ? 'transition-ui motion-safe:group-hover:-translate-y-0.5'
+          : '',
         className,
       ]
         .filter(Boolean)
@@ -38,10 +41,7 @@ export function ProjectMediaFrame({
       ) : (
         <div
           aria-hidden="true"
-          className={[
-            'project-media-placeholder absolute inset-0 transition-ui',
-            interactive ? 'motion-safe:group-hover:scale-[1.02]' : '',
-          ].join(' ')}
+          className="project-media-placeholder absolute inset-0 transition-ui"
         >
           <span className="type-label absolute left-4 top-4 text-text-muted sm:left-5 sm:top-5">
             {media.label}

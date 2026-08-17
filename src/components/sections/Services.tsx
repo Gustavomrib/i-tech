@@ -1,7 +1,14 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
 import { services } from '../../data/services'
+import {
+  createStaggerVariants,
+  motionDuration,
+  motionEase,
+  revealItemVariants,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
@@ -11,25 +18,36 @@ const supportingServices = services.filter(
   (service) => service.priority !== 'primary',
 )
 
-const listVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.07,
-    },
-  },
-}
+const listVariants = createStaggerVariants(0.06)
 
 const serviceVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.42, ease: [0.2, 0.8, 0.2, 1] },
+    transition: {
+      duration: motionDuration.normal,
+      ease: motionEase.reveal,
+      staggerChildren: 0.035,
+    },
+  },
+}
+
+const servicePartVariants: Variants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.normal,
+      ease: motionEase.reveal,
+    },
   },
 }
 
 export function Services() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <Section
       aria-labelledby="services-title"
@@ -39,10 +57,10 @@ export function Services() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <p className="type-label text-primary lg:col-span-3">O que fazemos</p>
           <div className="lg:col-span-8 lg:col-start-5">
@@ -58,7 +76,7 @@ export function Services() {
 
         <motion.ol
           className="mt-14 border-b border-border sm:mt-18 lg:mt-24"
-          initial="hidden"
+          initial={prefersReducedMotion ? false : 'hidden'}
           variants={listVariants}
           viewport={{ once: true, amount: 0.12 }}
           whileInView="visible"
@@ -69,25 +87,31 @@ export function Services() {
               key={service.number}
               variants={serviceVariants}
             >
-              <span className="type-label text-text-muted lg:col-span-1">
+              <motion.span
+                className="type-label text-text-muted lg:col-span-1"
+                variants={servicePartVariants}
+              >
                 {service.number} /
-              </span>
-              <div className="lg:col-span-5">
+              </motion.span>
+              <motion.div className="lg:col-span-5" variants={servicePartVariants}>
                 <p className="type-label text-text-muted">{service.label}</p>
                 <h3 className="type-h2 mt-3 text-text-primary transition-ui motion-safe:group-hover:translate-x-1 motion-safe:group-hover:text-primary">
                   {service.title}
                 </h3>
-              </div>
-              <p className="type-body max-w-2xl text-text-secondary lg:col-span-6 lg:pt-6">
+              </motion.div>
+              <motion.p
+                className="type-body max-w-2xl text-text-secondary lg:col-span-6 lg:pt-6"
+                variants={servicePartVariants}
+              >
                 {service.description}
-              </p>
+              </motion.p>
             </motion.li>
           ))}
         </motion.ol>
 
         <motion.ol
           className="grid border-b border-border md:grid-cols-[1.4fr_0.6fr]"
-          initial="hidden"
+          initial={prefersReducedMotion ? false : 'hidden'}
           start={5}
           variants={listVariants}
           viewport={{ once: true, amount: 0.2 }}
@@ -105,7 +129,7 @@ export function Services() {
                     : 'bg-surface',
                 ].join(' ')}
                 key={service.number}
-                variants={serviceVariants}
+                variants={revealItemVariants}
               >
                 <div className="flex items-center justify-between gap-4">
                   <span className="type-label text-text-muted">{service.number} /</span>
@@ -141,7 +165,11 @@ export function Services() {
           </div>
           <Button className="w-full sm:w-auto" href="#contato" variant="secondary">
             Solicitar diagnóstico
-            <ArrowUpRight aria-hidden="true" size={18} />
+            <ArrowUpRight
+              aria-hidden="true"
+              className="transition-ui motion-safe:group-hover:translate-x-0.5"
+              size={18}
+            />
           </Button>
         </div>
       </Container>

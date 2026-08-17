@@ -1,7 +1,8 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import type { Project } from '../../data/projects'
+import { revealItemVariants } from '../../lib/motion'
 import { Button } from '../ui/Button'
 import { ProjectMediaFrame } from './ProjectMediaFrame'
 
@@ -17,6 +18,7 @@ export function ProjectCard({
   className,
 }: ProjectCardProps) {
   const isFeatured = variant === 'featured'
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <motion.article
@@ -29,10 +31,10 @@ export function ProjectCard({
       ]
         .filter(Boolean)
         .join(' ')}
-      initial={{ opacity: 0, y: 12 }}
-      transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+      initial={prefersReducedMotion ? false : 'hidden'}
+      variants={revealItemVariants}
       viewport={{ once: true, amount: 0.16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      whileInView="visible"
     >
       <ProjectMediaFrame
         className={
@@ -78,7 +80,11 @@ export function ProjectCard({
           variant="ghost"
         >
           Ver detalhes
-          <ArrowUpRight aria-hidden="true" size={17} />
+          <ArrowUpRight
+            aria-hidden="true"
+            className="transition-ui motion-safe:group-hover:translate-x-0.5"
+            size={17}
+          />
         </Button>
       </div>
     </motion.article>

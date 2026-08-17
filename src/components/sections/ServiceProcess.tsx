@@ -1,31 +1,23 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import { serviceProcess } from '../../data/serviceProcess'
+import {
+  createStaggerVariants,
+  motionDuration,
+  motionEase,
+  revealItemVariants,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
 
-const timelineVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      delayChildren: 0.12,
-      staggerChildren: 0.08,
-    },
-  },
-}
-
-const stepVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.42, ease: [0.2, 0.8, 0.2, 1] },
-  },
-}
+const timelineVariants = createStaggerVariants(0.075, 0.1)
 
 export function ServiceProcess() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <Section
       aria-labelledby="process-title"
@@ -35,10 +27,10 @@ export function ServiceProcess() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <p className="type-label text-primary lg:col-span-3">Como funciona</p>
           <div className="lg:col-span-8 lg:col-start-5">
@@ -57,15 +49,18 @@ export function ServiceProcess() {
           <motion.div
             aria-hidden="true"
             className="process-rail origin-top bg-primary"
-            initial={{ scaleY: 0 }}
-            transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+            initial={prefersReducedMotion ? false : { scaleY: 0 }}
+            transition={{
+              duration: motionDuration.editorial,
+              ease: motionEase.reveal,
+            }}
             viewport={{ once: true, amount: 0.2 }}
             whileInView={{ scaleY: 1 }}
           />
 
           <motion.ol
             className="process-track"
-            initial="hidden"
+            initial={prefersReducedMotion ? false : 'hidden'}
             variants={timelineVariants}
             viewport={{ once: true, amount: 0.08 }}
             whileInView="visible"
@@ -74,7 +69,7 @@ export function ServiceProcess() {
               <motion.li
                 className="process-step"
                 key={step.number}
-                variants={stepVariants}
+                variants={revealItemVariants}
               >
                 <span
                   className={[
@@ -124,7 +119,11 @@ export function ServiceProcess() {
           </div>
           <Button className="w-full sm:w-auto" href="#contato">
             Solicitar orçamento
-            <ArrowUpRight aria-hidden="true" size={18} />
+            <ArrowUpRight
+              aria-hidden="true"
+              className="transition-ui motion-safe:group-hover:translate-x-0.5"
+              size={18}
+            />
           </Button>
         </div>
       </Container>

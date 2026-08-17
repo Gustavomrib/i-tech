@@ -1,11 +1,16 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import {
   mockTestimonials,
   trustSignals,
   type Testimonial,
 } from '../../data/testimonials'
+import {
+  createStaggerVariants,
+  revealItemVariants,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
@@ -18,23 +23,7 @@ const testimonialLayout = [
   'lg:col-span-6',
 ] as const
 
-const listVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.2, 0.8, 0.2, 1] },
-  },
-}
+const listVariants = createStaggerVariants(0.075)
 
 function TestimonialItem({
   testimonial,
@@ -54,7 +43,7 @@ function TestimonialItem({
       ]
         .filter(Boolean)
         .join(' ')}
-      variants={itemVariants}
+      variants={revealItemVariants}
     >
       <figure className={isFeatured ? 'flex h-full flex-col' : ''}>
         <div className="flex items-center justify-between gap-4">
@@ -92,6 +81,7 @@ function TestimonialItem({
 
 export function Testimonials() {
   const hasMockContent = mockTestimonials.some((testimonial) => testimonial.isMock)
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <Section
@@ -102,10 +92,10 @@ export function Testimonials() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <div className="lg:col-span-3">
             <p className="type-label text-primary">Experiências</p>
@@ -154,7 +144,7 @@ export function Testimonials() {
         <motion.ol
           aria-label="Depoimentos demonstrativos"
           className="mt-14 grid gap-px bg-border sm:mt-18 md:grid-cols-2 lg:mt-24 lg:grid-cols-12"
-          initial="hidden"
+          initial={prefersReducedMotion ? false : 'hidden'}
           variants={listVariants}
           viewport={{ once: true, amount: 0.08 }}
           whileInView="visible"
@@ -179,7 +169,11 @@ export function Testimonials() {
           </div>
           <Button className="w-full sm:w-auto" to="/#contato">
             Solicitar orçamento
-            <ArrowUpRight aria-hidden="true" size={18} />
+            <ArrowUpRight
+              aria-hidden="true"
+              className="transition-ui motion-safe:group-hover:translate-x-0.5"
+              size={18}
+            />
           </Button>
         </div>
       </Container>

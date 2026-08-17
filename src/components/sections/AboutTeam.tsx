@@ -1,26 +1,16 @@
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import { team, type TeamMember, type TeamPhoto } from '../../data/team'
+import {
+  createDirectionalReveal,
+  createStaggerVariants,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 
-const teamVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-}
-
-const profileVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.2, 0.8, 0.2, 1] },
-  },
-}
+const teamVariants = createStaggerVariants(0.12)
+const profileVariants = createStaggerVariants(0.08)
 
 function TeamPortrait({ photo }: { photo: TeamPhoto }) {
   return (
@@ -52,6 +42,8 @@ function TeamPortrait({ photo }: { photo: TeamPhoto }) {
 
 function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
   const isReversed = index % 2 === 1
+  const portraitVariants = createDirectionalReveal(isReversed ? 14 : -14)
+  const copyVariants = createDirectionalReveal(isReversed ? -14 : 14)
 
   return (
     <motion.article
@@ -59,24 +51,26 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
       className="grid gap-8 border-t border-border pt-10 sm:gap-10 sm:pt-14 lg:grid-cols-12 lg:items-center lg:gap-8 lg:pt-16"
       variants={profileVariants}
     >
-      <div
+      <motion.div
         className={[
           'w-full max-w-lg',
           isReversed
             ? 'lg:col-span-5 lg:col-start-8 lg:justify-self-end'
             : 'lg:col-span-5 lg:col-start-1',
         ].join(' ')}
+        variants={portraitVariants}
       >
         <TeamPortrait photo={member.photo} />
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
         className={[
           'min-w-0',
           isReversed
             ? 'lg:col-span-6 lg:col-start-1 lg:row-start-1'
             : 'lg:col-span-6 lg:col-start-7',
         ].join(' ')}
+        variants={copyVariants}
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="type-label text-primary">{member.number} / Sócio</p>
@@ -115,12 +109,14 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
             </li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </motion.article>
   )
 }
 
 export function AboutTeam() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <Section
       aria-labelledby="about-title"
@@ -130,10 +126,10 @@ export function AboutTeam() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <p className="type-label text-primary lg:col-span-3">Sobre a i&apos;tech</p>
           <div className="lg:col-span-8 lg:col-start-5">
@@ -167,7 +163,7 @@ export function AboutTeam() {
 
         <motion.div
           className="mt-14 grid gap-14 sm:mt-18 sm:gap-18 lg:mt-24 lg:gap-24"
-          initial="hidden"
+          initial={prefersReducedMotion ? false : 'hidden'}
           variants={teamVariants}
           viewport={{ once: true, amount: 0.08 }}
           whileInView="visible"

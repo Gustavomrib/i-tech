@@ -3,25 +3,24 @@ import { motion, useReducedMotion, type Variants } from 'motion/react'
 import { useState } from 'react'
 
 import { contactOptions, getWhatsAppUrl } from '../../data/contactOptions'
+import {
+  createStaggerVariants,
+  motionDuration,
+  motionEase,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { Button } from '../ui/Button'
 
-const optionsVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-}
+const optionsVariants = createStaggerVariants(0.05)
 
 const optionVariants: Variants = {
   hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.35, ease: [0.2, 0.8, 0.2, 1] },
+    transition: { duration: motionDuration.normal, ease: motionEase.reveal },
   },
 }
 
@@ -42,10 +41,10 @@ export function Contact() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-8">
           <motion.div
             className="lg:col-span-5"
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.45 }}
+            initial={prefersReducedMotion ? false : 'hidden'}
+            variants={sectionHeaderVariants}
             viewport={{ once: true, amount: 0.4 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView="visible"
           >
             <p className="type-label text-primary">Fale com a i&apos;tech</p>
             <h2 className="type-h1 mt-5 max-w-2xl text-text-primary" id="contact-title">
@@ -127,8 +126,8 @@ export function Contact() {
                           className={[
                             'inline-flex size-8 items-center justify-center rounded-full border transition-ui',
                             isSelected
-                              ? 'border-primary bg-primary text-text-on-primary'
-                              : 'border-border-highlight text-transparent',
+                              ? 'scale-100 border-primary bg-primary text-text-on-primary'
+                              : 'scale-75 border-border-highlight text-transparent',
                           ].join(' ')}
                         >
                           <Check size={16} strokeWidth={2.5} />
@@ -150,7 +149,18 @@ export function Contact() {
                 : 'Selecione um motivo para habilitar o WhatsApp.'}
             </p>
 
-            <div className="mt-5">
+            <motion.div
+              animate={{ opacity: 1, scale: 1 }}
+              className="mt-5"
+              initial={
+                prefersReducedMotion ? false : { opacity: 0.78, scale: 0.985 }
+              }
+              key={selectedOption ? 'contact-enabled' : 'contact-disabled'}
+              transition={{
+                duration: prefersReducedMotion ? 0 : motionDuration.fast,
+                ease: motionEase.enter,
+              }}
+            >
               {selectedOption ? (
                 <Button
                   aria-describedby="contact-selection-status"
@@ -162,7 +172,11 @@ export function Contact() {
                 >
                   <MessageCircle aria-hidden="true" size={19} />
                   Conversar no WhatsApp
-                  <ArrowUpRight aria-hidden="true" size={17} />
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="transition-ui motion-safe:group-hover:translate-x-0.5"
+                    size={17}
+                  />
                 </Button>
               ) : (
                 <Button
@@ -175,7 +189,7 @@ export function Contact() {
                   Conversar no WhatsApp
                 </Button>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       </Container>

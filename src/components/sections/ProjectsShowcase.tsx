@@ -1,6 +1,7 @@
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 
 import { projects } from '../../data/projects'
+import { sectionHeaderVariants } from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { ProjectCard } from '../projects/ProjectCard'
@@ -13,6 +14,8 @@ const projectLayout = [
 ] as const
 
 export function ProjectsShowcase() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <Section
       aria-labelledby="projects-title"
@@ -22,10 +25,10 @@ export function ProjectsShowcase() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <p className="type-label text-primary lg:col-span-3">Na bancada</p>
           <div className="lg:col-span-8 lg:col-start-5">

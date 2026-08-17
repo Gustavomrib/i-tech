@@ -1,6 +1,7 @@
 import { ArrowUpRight, MapPin, Truck } from 'lucide-react'
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
+import { motionDuration, motionEase } from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Button } from '../ui/Button'
 
@@ -8,22 +9,51 @@ const contentVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      delayChildren: 0.08,
-      staggerChildren: 0.08,
+      delayChildren: 0.06,
+      staggerChildren: 0.085,
     },
   },
 }
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 14 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.2, 0.8, 0.2, 1] },
+    transition: { duration: motionDuration.reveal, ease: motionEase.reveal },
+  },
+}
+
+const accentVariants: Variants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.12,
+      duration: motionDuration.normal,
+      ease: motionEase.reveal,
+    },
+  },
+}
+
+const mediaVariants: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.99 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: 0.46,
+      duration: motionDuration.editorial,
+      ease: motionEase.reveal,
+    },
   },
 }
 
 export function Hero() {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section
       aria-labelledby="hero-title"
@@ -37,7 +67,7 @@ export function Hero() {
           <motion.div
             animate="visible"
             className="hero-copy relative z-10"
-            initial="hidden"
+            initial={prefersReducedMotion ? false : 'hidden'}
             variants={contentVariants}
           >
             <motion.p className="type-label text-accent" variants={itemVariants}>
@@ -52,7 +82,13 @@ export function Hero() {
             >
               <span className="lg:block">Seu PC pode</span>{' '}
               <span className="lg:block">
-                entregar <span className="text-primary">mais.</span>
+                entregar{' '}
+                <motion.span
+                  className="inline-block text-primary"
+                  variants={accentVariants}
+                >
+                  mais.
+                </motion.span>
               </span>
             </motion.h1>
 
@@ -76,7 +112,11 @@ export function Hero() {
             >
               <Button className="w-full sm:w-auto" href="#contato" size="lg">
                 Solicitar orçamento
-                <ArrowUpRight aria-hidden="true" size={19} />
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="transition-ui motion-safe:group-hover:translate-x-0.5"
+                  size={19}
+                />
               </Button>
               <Button className="w-full sm:w-auto" size="lg" to="/projetos" variant="secondary">
                 Ver trabalhos
@@ -96,8 +136,8 @@ export function Hero() {
             animate="visible"
             aria-labelledby="hardware-placeholder-caption"
             className="hero-media relative mt-14 overflow-hidden border-l border-t border-border-highlight bg-surface lg:mt-0"
-            initial="hidden"
-            variants={itemVariants}
+            initial={prefersReducedMotion ? false : 'hidden'}
+            variants={mediaVariants}
           >
             <div aria-hidden="true" className="hero-technical-grid absolute inset-0" />
             <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-primary" />

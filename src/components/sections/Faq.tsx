@@ -3,6 +3,11 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useState } from 'react'
 
 import { faqItems } from '../../data/faq'
+import {
+  motionDuration,
+  motionEase,
+  sectionHeaderVariants,
+} from '../../lib/motion'
 import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 
@@ -19,10 +24,10 @@ export function Faq() {
       <Container>
         <motion.header
           className="grid gap-6 lg:grid-cols-12 lg:gap-8"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.45 }}
+          initial={prefersReducedMotion ? false : 'hidden'}
+          variants={sectionHeaderVariants}
           viewport={{ once: true, amount: 0.5 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView="visible"
         >
           <p className="type-label text-primary lg:col-span-3">Dúvidas frequentes</p>
           <div className="lg:col-span-8 lg:col-start-5">
@@ -61,7 +66,35 @@ export function Faq() {
                       aria-hidden="true"
                       className="inline-flex size-10 items-center justify-center rounded-control border border-border text-text-secondary transition-ui group-hover:border-border-highlight group-hover:text-text-primary"
                     >
-                      {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                      <AnimatePresence initial={false} mode="wait">
+                        <motion.span
+                          animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                          className="inline-flex"
+                          exit={{
+                            opacity: 0,
+                            rotate: isOpen ? -20 : 20,
+                            scale: 0.85,
+                            transition: {
+                              duration: prefersReducedMotion
+                                ? 0
+                                : motionDuration.feedback,
+                              ease: motionEase.exit,
+                            },
+                          }}
+                          initial={
+                            prefersReducedMotion
+                              ? false
+                              : { opacity: 0, rotate: isOpen ? 20 : -20, scale: 0.85 }
+                          }
+                          key={isOpen ? 'minus' : 'plus'}
+                          transition={{
+                            duration: prefersReducedMotion ? 0 : motionDuration.fast,
+                            ease: motionEase.enter,
+                          }}
+                        >
+                          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                        </motion.span>
+                      </AnimatePresence>
                     </span>
                   </button>
                 </h3>
@@ -72,11 +105,23 @@ export function Faq() {
                       animate={{ height: 'auto', opacity: 1 }}
                       aria-labelledby={questionId}
                       className="overflow-hidden"
-                      exit={{ height: 0, opacity: 0 }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: {
+                          duration: prefersReducedMotion
+                            ? 0
+                            : motionDuration.feedback,
+                          ease: motionEase.exit,
+                        },
+                      }}
                       id={answerId}
                       initial={{ height: 0, opacity: 0 }}
                       role="region"
-                      transition={{ duration: prefersReducedMotion ? 0 : 0.22 }}
+                      transition={{
+                        duration: prefersReducedMotion ? 0 : motionDuration.fast,
+                        ease: motionEase.enter,
+                      }}
                     >
                       <div className="grid grid-cols-[2.5rem_1fr] gap-3 pb-6 sm:grid-cols-[4rem_1fr] sm:gap-5 sm:px-4 sm:pb-8">
                         <span aria-hidden="true" />
