@@ -69,6 +69,7 @@ export const team = [
     number: '02',
     name: 'William Wallace Martins da Silva',
     firstName: 'William',
+    age: 21,
     education: [
       {
         qualification: 'Técnico em Eletrônica',

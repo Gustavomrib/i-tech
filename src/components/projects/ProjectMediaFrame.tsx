@@ -6,6 +6,7 @@ type ProjectMediaFrameProps = {
   meta?: string
   interactive?: boolean
   priority?: boolean
+  fitFrame?: boolean
 }
 
 export function ProjectMediaFrame({
@@ -14,6 +15,7 @@ export function ProjectMediaFrame({
   meta,
   interactive = false,
   priority = false,
+  fitFrame = false,
 }: ProjectMediaFrameProps) {
   return (
     <div
@@ -30,7 +32,10 @@ export function ProjectMediaFrame({
       {media.kind === 'image' ? (
         <img
           alt={media.alt}
-          className="block h-auto w-full object-contain"
+          className={[
+            'block w-full object-contain',
+            fitFrame ? 'h-full' : 'h-auto',
+          ].join(' ')}
           decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}
           height={media.height}

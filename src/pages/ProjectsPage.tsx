@@ -10,14 +10,6 @@ import { Button } from '../components/ui/Button'
 import { projects } from '../data/projects'
 import { usePageMetadata } from '../hooks/usePageMetadata'
 
-const projectLayout = [
-  'lg:col-span-7',
-  'lg:col-span-5 lg:mt-18',
-  'lg:col-span-5',
-  'lg:col-span-7 lg:mt-18',
-  'lg:col-span-8 lg:col-start-3',
-] as const
-
 export function ProjectsPage() {
   usePageMetadata({
     title: "Trabalhos realizados | i'tech",
@@ -47,14 +39,9 @@ export function ProjectsPage() {
               </div>
             </header>
 
-            <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-y-20">
-              {projects.map((project, index) => (
-                <ProjectCard
-                  className={projectLayout[index] ?? 'lg:col-span-6'}
-                  key={project.id}
-                  project={project}
-                  variant={project.featured ? 'featured' : 'standard'}
-                />
+            <div className="mt-12 grid items-start gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
               ))}
             </div>
 

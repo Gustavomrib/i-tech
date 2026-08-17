@@ -58,7 +58,6 @@ export type Project = {
   result: string
   configuration?: readonly ProjectConfigurationItem[]
   equipmentType: 'PC desktop'
-  featured: boolean
   media: ProjectMedia
   gallery?: readonly ProjectMedia[]
 }
@@ -90,7 +89,6 @@ export const projects: readonly Project[] = [
     result:
       'Limpeza interna concluída e conjunto revisado visualmente durante o serviço de manutenção preventiva.',
     equipmentType: 'PC desktop',
-    featured: true,
     media: {
       kind: 'image',
       src: '/clean-pc-01.webp',
@@ -127,7 +125,6 @@ export const projects: readonly Project[] = [
     result:
       'Serviço de limpeza interna concluído, com o conjunto submetido a uma revisão visual geral.',
     equipmentType: 'PC desktop',
-    featured: false,
     media: {
       kind: 'image',
       src: '/clean-pc-02.webp',
@@ -164,7 +161,6 @@ export const projects: readonly Project[] = [
     result:
       'Interior do computador limpo e conjunto revisado visualmente no serviço de manutenção.',
     equipmentType: 'PC desktop',
-    featured: false,
     media: {
       kind: 'image',
       src: '/clean-pc-03.webp',

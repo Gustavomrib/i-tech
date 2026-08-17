@@ -8,67 +8,39 @@ import { ProjectMediaFrame } from './ProjectMediaFrame'
 
 type ProjectCardProps = {
   project: Project
-  variant?: 'featured' | 'standard'
-  className?: string
 }
 
-export function ProjectCard({
-  project,
-  variant = 'standard',
-  className,
-}: ProjectCardProps) {
-  const isFeatured = variant === 'featured'
+export function ProjectCard({ project }: ProjectCardProps) {
   const prefersReducedMotion = useReducedMotion()
 
   return (
     <motion.article
-      className={[
-        'group flex h-full min-w-0 flex-col',
-        isFeatured
-          ? 'bg-surface-elevated p-4 shadow-surface sm:p-6'
-          : 'border-t border-border pt-4 transition-ui hover:border-border-highlight',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      className="group flex min-w-0 flex-col border-t border-border pt-4 transition-ui hover:border-border-highlight"
       initial={prefersReducedMotion ? false : 'hidden'}
       variants={revealItemVariants}
       viewport={{ once: true, amount: 0.16 }}
       whileInView="visible"
     >
       <ProjectMediaFrame
-        className={
-          project.media.kind === 'placeholder'
-            ? isFeatured
-              ? 'aspect-[4/3]'
-              : 'aspect-video'
-            : undefined
-        }
+        className="aspect-[3/4]"
+        fitFrame
         interactive
         media={project.media}
         meta={project.equipmentType}
       />
 
-      <div className={isFeatured ? 'pt-6 sm:pt-8' : 'pt-5'}>
+      <div className="pt-5">
         <div className="flex items-center justify-between gap-4">
           <p className="type-label text-primary">{project.category}</p>
           <span className="type-label text-text-muted">{project.number}</span>
         </div>
         <h3
-          className={[
-            'mt-4 text-text-primary transition-ui motion-safe:group-hover:translate-x-1',
-            isFeatured
-              ? 'type-h2'
-              : 'font-display text-2xl font-bold leading-tight tracking-[-0.02em]',
-          ].join(' ')}
+          className="mt-4 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-text-primary transition-ui motion-safe:group-hover:translate-x-1"
         >
           {project.title}
         </h3>
         <p
-          className={[
-            'mt-4 max-w-2xl text-text-secondary',
-            isFeatured ? 'type-body' : 'leading-relaxed',
-          ].join(' ')}
+          className="mt-4 max-w-2xl leading-relaxed text-text-secondary"
         >
           {project.shortDescription}
         </p>

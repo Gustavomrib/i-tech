@@ -7,11 +7,6 @@ import { Section } from '../layout/Section'
 import { ProjectCard } from '../projects/ProjectCard'
 
 const homeProjects = projects.slice(0, 3)
-const projectLayout = [
-  'lg:col-span-7 lg:row-span-2',
-  'lg:col-span-5',
-  'lg:col-span-5',
-] as const
 
 export function ProjectsShowcase() {
   const prefersReducedMotion = useReducedMotion()
@@ -42,14 +37,9 @@ export function ProjectsShowcase() {
           </div>
         </motion.header>
 
-        <div className="mt-14 grid gap-10 sm:mt-18 lg:grid-cols-12 lg:items-start lg:gap-8 lg:mt-24">
-          {homeProjects.map((project, index) => (
-            <ProjectCard
-              className={projectLayout[index]}
-              key={project.id}
-              project={project}
-              variant={index === 0 ? 'featured' : 'standard'}
-            />
+        <div className="mt-14 grid items-start gap-x-6 gap-y-12 sm:mt-18 md:grid-cols-2 lg:mt-24 lg:grid-cols-3 lg:gap-8">
+          {homeProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </Container>
