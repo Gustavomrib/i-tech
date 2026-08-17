@@ -10,7 +10,7 @@ const contentVariants: Variants = {
   visible: {
     transition: {
       delayChildren: 0.06,
-      staggerChildren: 0.085,
+      staggerChildren: 0.075,
     },
   },
 }
@@ -37,16 +37,11 @@ const accentVariants: Variants = {
   },
 }
 
-const mediaVariants: Variants = {
-  hidden: { opacity: 0, y: 14, scale: 0.99 },
+const detailsVariants: Variants = {
+  hidden: {},
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
     transition: {
-      delay: 0.46,
-      duration: motionDuration.editorial,
-      ease: motionEase.reveal,
+      staggerChildren: 0.065,
     },
   },
 }
@@ -57,16 +52,16 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative isolate min-h-svh overflow-hidden bg-background pb-16 pt-30 sm:pb-20 sm:pt-36 lg:flex lg:items-center lg:pb-24 lg:pt-32"
+      className="relative isolate overflow-hidden bg-background pb-16 pt-30 sm:pb-20 sm:pt-36 lg:pb-24 lg:pt-36 xl:pb-28 xl:pt-40"
       id="inicio"
     >
       <div aria-hidden="true" className="hero-page-grid absolute inset-0 -z-10" />
 
       <Container className="layout-container-wide">
-        <div className="hero-layout">
+        <div className="grid items-start lg:grid-cols-12">
           <motion.div
             animate="visible"
-            className="hero-copy relative z-10"
+            className="relative z-10 min-w-0 max-w-5xl lg:col-span-8"
             initial={prefersReducedMotion ? false : 'hidden'}
             variants={contentVariants}
           >
@@ -94,16 +89,19 @@ export function Hero() {
 
             <motion.div
               className="mt-8 max-w-xl border-l border-border-highlight pl-5 sm:mt-10 sm:pl-6"
-              variants={itemVariants}
+              variants={detailsVariants}
             >
-              <p className="type-body text-text-secondary">
+              <motion.p className="type-body text-text-secondary" variants={itemVariants}>
                 Montagem, diagnóstico, manutenção e otimização de computadores em
                 Volta Redonda e região.
-              </p>
-              <p className="mt-4 flex items-center gap-3 text-sm font-semibold text-text-primary sm:text-base">
+              </motion.p>
+              <motion.p
+                className="mt-4 flex items-center gap-3 text-sm font-semibold text-text-primary sm:text-base"
+                variants={itemVariants}
+              >
                 <Truck aria-hidden="true" className="shrink-0 text-primary" size={20} />
                 Buscamos seu equipamento no local.
-              </p>
+              </motion.p>
             </motion.div>
 
             <motion.div
@@ -132,49 +130,14 @@ export function Hero() {
             </motion.p>
           </motion.div>
 
-          <motion.figure
-            animate="visible"
-            aria-labelledby="hardware-placeholder-caption"
-            className="hero-media relative mt-14 overflow-hidden border-l border-t border-border-highlight bg-surface lg:mt-0"
-            initial={prefersReducedMotion ? false : 'hidden'}
-            variants={mediaVariants}
+          <div
+            aria-hidden="true"
+            className="relative hidden min-h-80 lg:col-span-3 lg:col-start-10 lg:block"
           >
-            <div aria-hidden="true" className="hero-technical-grid absolute inset-0" />
-            <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-primary" />
-            <div aria-hidden="true" className="absolute bottom-0 right-0 h-px w-2/3 bg-border-highlight" />
-            <div aria-hidden="true" className="absolute bottom-0 right-0 h-2/3 w-px bg-border-highlight" />
-
-            <div
-              aria-hidden="true"
-              className="absolute left-[11%] top-[12%] h-[66%] w-[68%] border border-border-highlight bg-background-secondary shadow-surface"
-            >
-              <div className="absolute inset-[7%] border border-border" />
-              <div className="absolute left-[17%] top-[12%] size-[42%] rounded-full border border-border-highlight">
-                <div className="absolute inset-[18%] rounded-full border border-border" />
-                <div className="absolute inset-[38%] rounded-full bg-primary" />
-              </div>
-              <div className="absolute bottom-[14%] left-[17%] right-[17%] grid gap-2">
-                <span className="h-px bg-border-highlight" />
-                <span className="h-px bg-border" />
-                <span className="h-px bg-border" />
-              </div>
-            </div>
-
-            <div aria-hidden="true" className="absolute right-[9%] top-[9%] text-right">
-              <span className="type-label block text-text-muted">Sistema</span>
-              <span className="type-label mt-1 block text-text-primary">Desktop / 01</span>
-            </div>
-
-            <figcaption
-              className="absolute bottom-6 left-6 right-8 sm:bottom-8 sm:left-8"
-              id="hardware-placeholder-caption"
-            >
-              <span className="type-label text-primary">Área de fotografia</span>
-              <span className="mt-2 block text-sm text-text-secondary">
-                Hardware em detalhe — imagem real será adicionada posteriormente.
-              </span>
-            </figcaption>
-          </motion.figure>
+            <span className="absolute right-6 top-8 h-48 w-px bg-border-highlight xl:right-10 xl:h-56" />
+            <span className="absolute right-5 top-8 size-2 bg-primary xl:right-9" />
+            <span className="absolute right-6 top-56 h-px w-20 bg-border xl:right-10 xl:top-64 xl:w-28" />
+          </div>
         </div>
       </Container>
     </section>
