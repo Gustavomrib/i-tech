@@ -59,7 +59,7 @@ export function Navbar() {
         <div className="flex h-18 items-center justify-between gap-6">
           <Link
             aria-label="i'tech — página inicial"
-            className="rounded-control text-xl font-bold tracking-[-0.04em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl"
+            className="rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl"
             onClick={closeMenu}
             to="/"
           >
