@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 
 import type { Project } from '../../data/projects'
 import { Button } from '../ui/Button'
+import { ProjectMediaFrame } from './ProjectMediaFrame'
 
 type ProjectCardProps = {
   project: Project
@@ -33,35 +34,12 @@ export function ProjectCard({
       viewport={{ once: true, amount: 0.16 }}
       whileInView={{ opacity: 1, y: 0 }}
     >
-      <div
-        className={[
-          'relative overflow-hidden border border-border bg-background',
-          isFeatured ? 'aspect-[4/3]' : 'aspect-video',
-        ].join(' ')}
-      >
-        {project.media.kind === 'image' ? (
-          <img
-            alt={project.media.alt}
-            className="h-full w-full object-cover transition-ui motion-safe:group-hover:scale-[1.02]"
-            decoding="async"
-            loading="lazy"
-            src={project.media.src}
-          />
-        ) : (
-          <div
-            aria-hidden="true"
-            className="project-media-placeholder absolute inset-0 transition-ui motion-safe:group-hover:scale-[1.02]"
-          >
-            <span className="type-label absolute left-4 top-4 text-text-muted sm:left-5 sm:top-5">
-              {project.media.label}
-            </span>
-            <span className="type-label absolute bottom-4 right-4 text-text-muted sm:bottom-5 sm:right-5">
-              {project.equipmentType}
-            </span>
-            <span className="absolute left-1/2 top-1/2 h-px w-16 -translate-x-1/2 bg-border-highlight" />
-          </div>
-        )}
-      </div>
+      <ProjectMediaFrame
+        className={isFeatured ? 'aspect-[4/3]' : 'aspect-video'}
+        interactive
+        media={project.media}
+        meta={project.equipmentType}
+      />
 
       <div className={isFeatured ? 'pt-6 sm:pt-8' : 'pt-5'}>
         <div className="flex items-center justify-between gap-4">

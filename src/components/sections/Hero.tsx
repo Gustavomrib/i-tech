@@ -32,7 +32,7 @@ export function Hero() {
     >
       <div aria-hidden="true" className="hero-page-grid absolute inset-0 -z-10" />
 
-      <Container className="hero-container">
+      <Container className="layout-container-wide">
         <div className="hero-layout">
           <motion.div
             animate="visible"

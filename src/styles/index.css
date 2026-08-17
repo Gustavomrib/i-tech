@@ -211,7 +211,7 @@
     mask-image: linear-gradient(to bottom, black, transparent 82%);
   }
 
-  .hero-container {
+  .layout-container-wide {
     --container-max: var(--container-wide);
   }
 

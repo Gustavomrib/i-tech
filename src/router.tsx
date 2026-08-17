@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import { HomePage } from './pages/HomePage'
-import { ProjectDetailPlaceholder } from './pages/ProjectDetailPlaceholder'
+import { ProjectCasePage } from './pages/ProjectCasePage'
 import { ProjectsPage } from './pages/ProjectsPage'
 
 export const router = createBrowserRouter([
@@ -15,6 +15,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/projetos/:slug',
-    element: <ProjectDetailPlaceholder />,
+    element: <ProjectCasePage />,
   },
 ])
