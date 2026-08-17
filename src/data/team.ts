@@ -57,8 +57,11 @@ export const team = [
     contribution:
       "Na i'tech, participa da análise e da execução dos serviços com atenção à organização, à compatibilidade e ao cuidado com cada componente.",
     photo: {
-      kind: 'placeholder',
-      label: 'Foto do Davi',
+      kind: 'image',
+      src: '/davi.jpg',
+      alt: "Davi Agapito dos Santos, sócio da i'tech",
+      width: 640,
+      height: 641,
     },
   },
   {
@@ -82,8 +85,11 @@ export const team = [
     contribution:
       "Na i'tech, atua com diagnóstico, montagem, manutenção e análise de hardware, unindo conhecimento técnico à experiência prática com computadores.",
     photo: {
-      kind: 'placeholder',
-      label: 'Foto do William',
+      kind: 'image',
+      src: '/willian.jpeg',
+      alt: "William Wallace Martins da Silva, sócio da i'tech",
+      width: 1194,
+      height: 1280,
     },
   },
 ] as const satisfies readonly TeamMember[]
