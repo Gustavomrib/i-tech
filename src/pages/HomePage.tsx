@@ -8,6 +8,7 @@ import { Hero } from '../components/sections/Hero'
 import { ProjectsShowcase } from '../components/sections/ProjectsShowcase'
 import { ServiceProcess } from '../components/sections/ServiceProcess'
 import { Services } from '../components/sections/Services'
+import { Testimonials } from '../components/sections/Testimonials'
 
 export function HomePage() {
   const { hash } = useLocation()
@@ -32,6 +33,7 @@ export function HomePage() {
         <ServiceProcess />
         <ProjectsShowcase />
         <AboutTeam />
+        <Testimonials />
       </main>
     </>
   )
