@@ -79,7 +79,7 @@ export function Hero() {
                 <ArrowUpRight aria-hidden="true" size={19} />
               </Button>
               <Button className="w-full sm:w-auto" size="lg" to="/projetos" variant="secondary">
-                Ver projetos
+                Ver trabalhos
               </Button>
             </motion.div>
 

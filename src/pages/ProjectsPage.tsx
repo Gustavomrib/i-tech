@@ -30,7 +30,7 @@ export function ProjectsPage() {
       <SkipLink />
       <Navbar />
       <main id="conteudo-principal">
-        <Section className="min-h-screen border-b border-border bg-background pt-32 sm:pt-36">
+        <Section className="min-h-screen bg-background pt-32 sm:pt-36">
           <Container>
             <header className="grid gap-6 border-b border-border pb-12 lg:grid-cols-12 lg:gap-8 lg:pb-16">
               <div className="lg:col-span-3">

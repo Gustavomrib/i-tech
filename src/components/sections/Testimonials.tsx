@@ -171,7 +171,7 @@ export function Testimonials() {
         <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 sm:mt-16 sm:flex-row sm:items-center sm:pt-10">
           <div>
             <h3 className="type-h3 text-text-primary">
-              Seu PC pode ser o próximo projeto.
+              Seu PC também pode receber esse cuidado.
             </h3>
             <p className="mt-2 text-text-secondary">
               Conte o que sua máquina precisa.

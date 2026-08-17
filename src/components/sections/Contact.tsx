@@ -35,7 +35,7 @@ export function Contact() {
   return (
     <Section
       aria-labelledby="contact-title"
-      className="scroll-mt-18 border-y border-border bg-background-secondary"
+      className="scroll-mt-18 border-t border-border bg-background-secondary"
       id="contato"
     >
       <Container>
@@ -67,12 +67,6 @@ export function Contact() {
                 <dt className="type-label text-text-muted">Retirada</dt>
                 <dd className="mt-2 max-w-md leading-relaxed text-text-secondary">
                   Combinada conforme disponibilidade em Volta Redonda e região.
-                </dd>
-              </div>
-              <div className="mt-6">
-                <dt className="type-label text-text-muted">Transparência</dt>
-                <dd className="mt-2 max-w-md leading-relaxed text-text-primary">
-                  O serviço só é realizado após sua aprovação.
                 </dd>
               </div>
             </dl>
