@@ -119,13 +119,19 @@ export function Navbar() {
             <Link
               aria-label="i'tech — página inicial"
               className={[
-                'inline-flex rounded-control font-display text-xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus md:text-2xl',
+                'inline-flex rounded-control transition-ui focus-visible:outline-focus',
                 isScrolled ? 'motion-safe:md:scale-[0.96]' : '',
               ].join(' ')}
               onClick={closeMenu}
               to="/"
             >
-              i<span className="text-primary">&apos;</span>tech
+              <img
+                alt=""
+                className="h-9 w-9 object-contain md:h-10 md:w-10"
+                height={40}
+                src="/logo.webp"
+                width={40}
+              />
             </Link>
           </motion.div>
 

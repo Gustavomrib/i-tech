@@ -27,10 +27,16 @@ export function Footer() {
           <div className="lg:col-span-5">
             <Link
               aria-label="i'tech — página inicial"
-              className="inline-flex rounded-control font-display text-2xl font-bold tracking-[-0.035em] text-text-primary transition-ui hover:text-accent focus-visible:outline-focus"
+              className="inline-flex rounded-control transition-ui focus-visible:outline-focus"
               to="/"
             >
-              i<span className="text-primary">&apos;</span>tech
+              <img
+                alt=""
+                className="h-11 w-11 object-contain"
+                height={44}
+                src="/logo.webp"
+                width={44}
+              />
             </Link>
             <p className="mt-5 max-w-md leading-relaxed text-text-secondary">
               Hardware, manutenção e performance em Volta Redonda e região.
